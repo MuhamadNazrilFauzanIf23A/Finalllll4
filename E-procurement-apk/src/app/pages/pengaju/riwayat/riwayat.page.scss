@@ -1,0 +1,48 @@
+:host {
+  color-scheme: light;
+}
+
+.riwayat-content {
+  --background: #3762a1;
+  padding-bottom: 80px;
+}
+
+.riwayat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px; // ✅ jarak antar card lebih rapat
+  padding: 20px 16px;
+}
+
+.riwayat-card {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+ion-card-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #1e1e1e;
+}
+
+ion-card-subtitle {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.alasan {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.no-data {
+  font-size: 14px;
+  color: #6c757d;
+  margin-top: 24px;
+  text-align: center;
+}

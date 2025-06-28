@@ -1,0 +1,46 @@
+<div class="layout">
+  <!-- Sidebar Navbar Vendor -->
+  <app-navbar-vendor></app-navbar-vendor>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Pengajuan Penawaran</h3>
+
+    <form (ngSubmit)="submit()">
+      <div class="mb-3">
+        <label for="administrasi" class="form-label">Dokumen Administrasi</label>
+        <input
+          type="file"
+          class="form-control"
+          id="administrasi"
+          (change)="onFileChange($event, 'administrasi')"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="teknis" class="form-label">Dokumen Teknis</label>
+        <input
+          type="file"
+          class="form-control"
+          id="teknis"
+          (change)="onFileChange($event, 'teknis')"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="harga" class="form-label">Dokumen Penawaran Harga</label>
+        <input
+          type="file"
+          class="form-control"
+          id="harga"
+          (change)="onFileChange($event, 'harga')"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-3">Kirim Penawaran</button>
+    </form>
+  </div>
+</div>

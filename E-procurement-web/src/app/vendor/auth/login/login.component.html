@@ -1,0 +1,60 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow" style="max-width: 400px; width: 100%;">
+    <div class="text-center">
+      <img
+        src="https://static.vecteezy.com/system/resources/previews/004/553/088/non_2x/order-processing-procurement-icon-on-white-vector.jpg"
+        alt="Logo"
+        class="mb-3"
+        style="width: 80px"
+      />
+      <h4 class="mb-3 fw-bold">E-PROCUREMENT VENDOR</h4>
+    </div>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="mb-3">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger py-2">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+
+      <div class="text-center mt-3">
+      <a (click)="goToForgotPassword()" class="text-decoration-none text-primary small" role="button">
+        Lupa Password?
+      </a>
+
+      </div>
+
+      <div class="text-center mt-2">
+        <span class="text-muted small">Belum punya akun?</span>
+        <a (click)="goToRegister()" class="text-primary text-decoration-none small" role="button">Daftar Vendor</a>
+      </div>
+    </form>
+
+    <div class="text-center mt-4 small text-muted">
+      &copy; E-procurement <br />
+      Halaman untuk vendor
+    </div>
+  </div>
+</div>

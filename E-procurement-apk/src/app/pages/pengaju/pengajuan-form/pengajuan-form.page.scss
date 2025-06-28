@@ -1,0 +1,64 @@
+:host {
+  color-scheme: light;
+}
+
+.pengajuan-content {
+  --background: #3762a1;
+  padding-bottom: 120px; // supaya tidak ketutup sidebar
+  font-family: 'Poppins', sans-serif;
+}
+
+.container {
+  padding: 16px;
+}
+
+.icon-header {
+  font-size: 48px;
+  color: #0d6efd;
+  margin-bottom: 8px;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+.custom-input {
+  --background: #ffffff;
+  --border-radius: 12px;
+  --padding-start: 12px;
+  --color: #212529;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 6px;
+}
+
+ion-input::part(native),
+ion-textarea::part(native) {
+  color: #212529;
+  background-color: #ffffff;
+  font-size: 15px;
+}
+
+.form-text {
+  font-size: 13px;
+  color: #a39f9f;
+  margin-left: 4px;
+}
+
+ion-button.btn-ajukan {
+  --background: #0d6efd;
+  --color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+}

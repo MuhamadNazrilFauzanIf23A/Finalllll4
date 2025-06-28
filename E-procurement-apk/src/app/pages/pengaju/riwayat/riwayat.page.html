@@ -1,0 +1,34 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Riwayat Permintaan</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="riwayat-content" fullscreen>
+    <div class="riwayat-container">
+      <ion-card *ngFor="let item of riwayatList" class="riwayat-card">
+        <ion-card-header>
+          <ion-card-title>{{ item.namaItem }}</ion-card-title>
+          <ion-card-subtitle>{{ item.tanggal }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="alasan">{{ item.alasan }}</p>
+
+          <ng-container *ngIf="item.dokumen">
+            <ion-button fill="clear" size="small" color="primary" (click)="lihatDokumen(item.dokumen)">
+              <ion-icon name="document-outline" slot="start"></ion-icon>
+              Lihat Dokumen
+            </ion-button>
+          </ng-container>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-text *ngIf="riwayatList.length === 0" class="no-data">
+        Belum ada permintaan sebelumnya.
+      </ion-text>
+    </div>
+  </ion-content>
+
+  <app-sidebar></app-sidebar>
+</div>

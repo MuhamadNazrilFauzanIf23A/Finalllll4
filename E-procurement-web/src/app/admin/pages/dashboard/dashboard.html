@@ -1,0 +1,77 @@
+<div class="layout">
+  <!-- Sidebar/Navbar -->
+  <app-navbar></app-navbar>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Dashboard Pengadaan</h3>
+
+    <div class="row g-3">
+      <!-- 1. Permintaan Disetujui -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="card bg-primary text-white">
+          <div class="card-body">
+            <h5 class="card-title">1</h5>
+            <p class="card-text">Permintaan Disetujui</p>
+            <a routerLink="/admin/manage-requests" class="btn btn-light btn-sm">More info</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Vendor Terdaftar -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="card bg-success text-white">
+          <div class="card-body">
+            <h5 class="card-title">2</h5>
+            <p class="card-text">Vendor Terdaftar</p>
+            <a routerLink="/admin/input-vendor" class="btn btn-light btn-sm">More info</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Proyek Aktif -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="card bg-warning text-dark">
+          <div class="card-body">
+            <h5 class="card-title">3</h5>
+            <p class="card-text">Proyek Pengadaan Aktif</p>
+            <a routerLink="/admin/input-vendor" class="btn btn-light btn-sm">More info</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Tender Berlangsung -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="card bg-info text-white">
+          <div class="card-body">
+            <h5 class="card-title">4</h5>
+            <p class="card-text">Tender Berlangsung</p>
+            <a routerLink="/admin/tender" class="btn btn-light btn-sm">More info</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. PO Terbit -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="card bg-secondary text-white">
+          <div class="card-body">
+            <h5 class="card-title">5</h5>
+            <p class="card-text">Purchase Order Diterbitkan</p>
+            <a routerLink="/admin/purchase-order" class="btn btn-light btn-sm">More info</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Total Nilai Pengadaan -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="card bg-danger text-white">
+          <div class="card-body">
+            <h5 class="card-title">6</h5>
+            <p class="card-text">Total Nilai Pengadaan</p>
+            <a routerLink="/admin/laporan" class="btn btn-light btn-sm">More info</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

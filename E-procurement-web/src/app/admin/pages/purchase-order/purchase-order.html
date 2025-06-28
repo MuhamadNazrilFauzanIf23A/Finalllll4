@@ -1,0 +1,40 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar></app-navbar>
+
+  <!-- Main content -->
+  <div class="main-content p-4">
+    <h3>Purchase Order (PO)</h3>
+
+    <div class="table-responsive mt-4">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>No</th>
+            <th>Nama Proyek</th>
+            <th>Vendor Pemenang</th>
+            <th>Nilai PO</th>
+            <th>Tanggal Terbit</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let po of daftarPO; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ po.proyek }}</td>
+            <td>{{ po.vendor }}</td>
+            <td>Rp {{ po.nilai | number }}</td>
+            <td>{{ po.tanggal | date: 'mediumDate' }}</td>
+            <td>
+              <span class="badge bg-success">Diterbitkan</span>
+            </td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm" (click)="lihatPO(po)">Lihat PO</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

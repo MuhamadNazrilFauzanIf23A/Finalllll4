@@ -1,0 +1,24 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 1rem;
+  margin-left: 250px;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}

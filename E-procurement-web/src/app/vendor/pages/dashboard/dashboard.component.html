@@ -1,0 +1,26 @@
+<div class="layout">
+  <!-- Sidebar Vendor -->
+  <app-navbar-vendor></app-navbar-vendor>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Tender Terbuka</h3>
+
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let tender of tenderList">
+        <div class="card h-100 shadow-sm">
+          <img [src]="tender.gambar" class="card-img-top" alt="Tender Image" />
+          <div class="card-body">
+            <h5 class="card-title">{{ tender.nama }}</h5>
+            <p class="card-text">{{ tender.deskripsi }}</p>
+            <span class="badge bg-info text-dark">{{ tender.kategori }}</span>
+            <p class="mt-2 mb-1 text-muted small">
+              Batas Pendaftaran: {{ tender.batas | date: 'longDate' }}
+            </p>
+            <a class="btn btn-primary btn-sm" [routerLink]="['/vendor/tender-detail', tender.id]">Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

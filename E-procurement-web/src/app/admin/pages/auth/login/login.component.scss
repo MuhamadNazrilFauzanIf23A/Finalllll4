@@ -1,0 +1,79 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  font-family: 'Segoe UI', sans-serif;
+  padding: 1rem; // agar tidak mepet di layar kecil
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.login-logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+.login-title {
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #007bff;
+  font-size: 1.25rem;
+}
+
+.form-control {
+  border-radius: 0;
+  font-size: 1rem;
+}
+
+.forgot-link {
+  font-size: 0.9rem;
+}
+
+.footer-text {
+  color: rgb(141, 141, 141);
+  font-size: 0.75rem;
+  margin-top: 2rem;
+}
+
+// Responsif untuk HP / layar kecil
+@media (max-width: 576px) {
+  .login-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .login-title {
+    font-size: 1.1rem;
+  }
+
+  .form-control {
+    font-size: 0.9rem;
+  }
+
+  button {
+    font-size: 0.95rem;
+  }
+}
+
+// Animasi masuk
+@keyframes fadeIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

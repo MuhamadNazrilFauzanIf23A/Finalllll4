@@ -1,0 +1,46 @@
+<div class="login-card">
+  <img
+    src="https://static.vecteezy.com/system/resources/previews/004/553/088/non_2x/order-processing-procurement-icon-on-white-vector.jpg"
+    alt="Logo"
+    class="login-logo"
+  />
+
+  <div class="login-title">E PROCUREMENT ADMIN</div>
+
+  <!-- Notifikasi Error -->
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Form Login -->
+  <form (ngSubmit)="onLogin()">
+    <div class="mb-3 text-start">
+      <input
+        type="email"
+        class="form-control"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+        required
+      />
+    </div>
+
+    <div class="mb-3 text-start">
+      <input
+        type="password"
+        class="form-control"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">LOGIN</button>
+  </form>
+
+  <div class="footer-text mt-4">
+    &copy; E-Procurement<br />
+    Halaman Admin
+  </div>
+</div>

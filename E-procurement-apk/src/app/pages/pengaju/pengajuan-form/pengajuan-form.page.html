@@ -1,0 +1,76 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar color="light">
+      <ion-title>Pengajuan Barang / Jasa</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="pengajuan-content" fullscreen>
+    <div class="container form-wrapper">
+
+      <div class="text-center mb-2">
+        <ion-icon name="document-text-outline" class="icon-header"></ion-icon>
+      </div>
+
+      <div class="card shadow-sm p-4 rounded-4 w-100 form-card">
+        <form [formGroup]="formPengajuan" (ngSubmit)="submitPengajuan()">
+          <!-- Nama Item -->
+          <ion-item lines="none" class="mb-1 custom-input">
+            <ion-icon slot="start" name="cube-outline"></ion-icon>
+            <ion-input placeholder="Nama Item" formControlName="item" fill="solid"></ion-input>
+          </ion-item>
+          <p class="form-text mb-3">Contoh: Laptop, Kursi Kantor, Printer</p>
+
+          <!-- Spesifikasi -->
+          <ion-item lines="none" class="mb-1 custom-input">
+            <ion-icon slot="start" name="list-outline"></ion-icon>
+            <ion-textarea placeholder="Spesifikasi" formControlName="spesifikasi" fill="solid" autoGrow="true"></ion-textarea>
+          </ion-item>
+          <p class="form-text mb-3">Deskripsikan fitur, tipe, atau merk</p>
+
+          <!-- Kuantitas -->
+          <ion-item lines="none" class="mb-1 custom-input">
+            <ion-icon slot="start" name="stats-chart-outline"></ion-icon>
+            <ion-input type="number" min="1" placeholder="Kuantitas" formControlName="kuantitas" fill="solid"></ion-input>
+          </ion-item>
+          <p class="form-text mb-3">Jumlah unit yang dibutuhkan</p>
+
+          <!-- Alasan -->
+          <ion-item lines="none" class="mb-1 custom-input">
+            <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
+            <ion-textarea placeholder="Alasan Kebutuhan" formControlName="alasan" fill="solid" autoGrow="true"></ion-textarea>
+          </ion-item>
+          <p class="form-text mb-3">Kenapa barang ini dibutuhkan? Untuk apa?</p>
+
+          <!-- Divisi -->
+          <ion-item lines="none" class="mb-1 custom-input">
+            <ion-icon slot="start" name="people-outline"></ion-icon>
+            <ion-select placeholder="Pilih Divisi" formControlName="divisi" interface="action-sheet">
+              <ion-select-option value="it">IT</ion-select-option>
+              <ion-select-option value="hrd">HRD</ion-select-option>
+              <ion-select-option value="keuangan">Keuangan</ion-select-option>
+              <ion-select-option value="marketing">Marketing</ion-select-option>
+              <ion-select-option value="produksi">Produksi</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <p class="form-text mb-3">Divisi yang mengajukan permintaan</p>
+
+          <!-- Upload -->
+          <ion-item lines="none" class="mb-1 custom-input">
+            <ion-icon slot="start" name="attach-outline"></ion-icon>
+            <input type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx,.jpg,.png"
+              style="width: 100%; font-size: 14px; border: none;" />
+          </ion-item>
+          <p class="form-text mb-3">Upload dokumen pendukung (opsional)</p>
+
+          <!-- Tombol -->
+          <ion-button expand="block" type="submit" class="btn-ajukan rounded-pill mt-3">
+            Ajukan Permintaan
+          </ion-button>
+        </form>
+      </div>
+    </div>
+  </ion-content>
+
+  <app-sidebar class="fixed-sidebar"></app-sidebar>
+</div>

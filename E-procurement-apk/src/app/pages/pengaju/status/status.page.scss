@@ -1,0 +1,73 @@
+:host {
+  color-scheme: light;
+}
+
+.status-content {
+  --background: #3762a1; // warna biru muda solid, bisa diganti sesuai selera
+  padding-bottom: 80px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  padding: 20px 16px; //
+}
+
+.status-card {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+ion-card-header {
+  padding-bottom: 4px;
+}
+
+ion-card-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #1e1e1e;
+}
+
+ion-card-subtitle {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.small {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.status-chip {
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 13px;
+  padding: 4px 12px;
+  --color: #fff;
+}
+
+ion-chip[color="success"] {
+  --background: #28a745;
+}
+
+ion-chip[color="warning"] {
+  --background: #ffc107;
+  --color: #212529;
+}
+
+ion-chip[color="danger"] {
+  --background: #dc3545;
+}
+
+.no-data {
+  font-size: 14px;
+  color: #6c757d;
+  margin-top: 24px;
+  text-align: center;
+}

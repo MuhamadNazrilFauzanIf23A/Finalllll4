@@ -1,0 +1,84 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card shadow p-4">
+        <h3 class="text-center mb-4">📝 Registrasi Vendor</h3>
+        <form (ngSubmit)="onSubmit()">
+          
+          <!-- SECTION: Informasi Perusahaan -->
+          <h5 class="mb-3 border-bottom pb-2"><i class="bi bi-building me-2"></i>Informasi Perusahaan</h5>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nama Perusahaan</label>
+              <input type="text" class="form-control" [(ngModel)]="vendor.namaPerusahaan" name="namaPerusahaan" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Kategori Layanan</label>
+              <select class="form-select" [(ngModel)]="vendor.kategori" name="kategori" required>
+                <option value="">-- Pilih Kategori --</option>
+                <option value="IT">IT</option>
+                <option value="Konstruksi">Konstruksi</option>
+                <option value="Konsultan">Konsultan</option>
+                <option value="Pengadaan Barang">Pengadaan Barang</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="vendor.email" name="email" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Nomor Telepon</label>
+              <input type="text" class="form-control" [(ngModel)]="vendor.telepon" name="telepon" required />
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Alamat</label>
+              <textarea class="form-control" rows="2" [(ngModel)]="vendor.alamat" name="alamat" required></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Penanggung Jawab</label>
+              <input type="text" class="form-control" [(ngModel)]="vendor.penanggungJawab" name="penanggungJawab" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Tahun Berdiri</label>
+              <input type="number" class="form-control" [(ngModel)]="vendor.tahunBerdiri" name="tahunBerdiri" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Website</label>
+              <input type="url" class="form-control" [(ngModel)]="vendor.website" name="website" />
+            </div>
+          </div>
+
+          <!-- Upload Dokumen -->
+          <div class="mt-4">
+            <label class="form-label">📄 Dokumen Legalitas (NPWP/SIUP/TDP)</label>
+            <input type="file" class="form-control" (change)="onFileSelect($event)" required />
+            <div *ngIf="vendor.dokumen" class="text-success small mt-1">
+              <i class="bi bi-check-circle-fill me-1"></i> File dipilih: {{ vendor.dokumen.name }}
+            </div>
+          </div>
+
+          <!-- SECTION: Akun Login -->
+          <h5 class="mt-5 mb-3 border-bottom pb-2"><i class="bi bi-person-circle me-2"></i>Data Akun</h5>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" [(ngModel)]="vendor.password" name="password" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Konfirmasi Password</label>
+              <input type="password" class="form-control" [(ngModel)]="vendor.konfirmasiPassword" name="konfirmasiPassword" required />
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary px-5">
+              <i class="bi bi-send me-2"></i>Daftar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

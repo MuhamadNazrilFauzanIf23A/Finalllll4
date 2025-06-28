@@ -1,0 +1,58 @@
+<div class="layout">
+  <!-- Sidebar Vendor -->
+  <app-navbar-vendor></app-navbar-vendor>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Jadwal Aanwijzing</h3>
+
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Nama Proyek</th>
+            <th>Jadwal Aanwijzing</th>
+            <th>Status</th>
+            <th>Konfirmasi Kehadiran</th>
+            <th>Dokumen Penawaran</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of daftarAanwijzing">
+            <td>{{ item.namaProyek }}</td>
+            <td>
+              {{ item.jadwal | date: 'fullDate' }}<br />
+              <small class="text-muted">{{ item.jadwal | date: 'shortTime' }}</small>
+            </td>
+            <td>
+              <span class="badge"
+                    [ngClass]="{
+                      'bg-secondary': item.status === 'Dijadwalkan',
+                      'bg-success': item.status === 'Selesai',
+                      'bg-warning text-dark': item.status === 'Berlangsung'
+                    }">
+                {{ item.status }}
+              </span>
+            </td>
+            <td>
+              <button 
+                class="btn btn-sm"
+                [ngClass]="{
+                  'btn-success': item.konfirmasi,
+                  'btn-outline-success': !item.konfirmasi
+                }"
+                (click)="konfirmasiKehadiran(item)">
+                {{ item.konfirmasi ? 'Dikonfirmasi' : 'Konfirmasi' }}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm" (click)="lihatDokumen(item)">
+                Lihat
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

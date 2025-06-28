@@ -1,0 +1,85 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component.
+ */
+
+/* --------------------------------------------- */
+/* ✅ Font Global - Poppins                      */
+/* --------------------------------------------- */
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #222;
+  background-color: #fff;
+  color-scheme: light; // ✅ Paksa light mode
+}
+
+/* --------------------------------------------- */
+/* ✅ Fix Dark Mode Override                     */
+/* --------------------------------------------- */
+:root {
+  color-scheme: light;
+  --ion-background-color: #ffffff;
+  --ion-text-color: #000000;
+  --ion-color-step-50: #f8f9fa;
+  --ion-color-step-100: #f1f3f5;
+}
+
+/* --------------------------------------------- */
+/* ✅ Jaga supaya konten tidak ketiban bottom nav */
+/* --------------------------------------------- */
+ion-content {
+  --padding-bottom: 90px; /* default space for bottom nav */
+}
+
+/* --------------------------------------------- */
+/* ✅ Responsive Headings & Basic UI Elements    */
+/* --------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+ion-label {
+  font-weight: 500;
+}
+
+ion-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* --------------------------------------------- */
+/* ✅ FIX INPUT/FORM GLOBAL                     */
+/* --------------------------------------------- */
+ion-input::part(native),
+ion-textarea::part(native) {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  font-size: 15px;
+}
+
+ion-item {
+  --background: #ffffff;
+  --color: #000000;
+}
+
+/* --------------------------------------------- */
+/* ✅ Import Core Ionic Styles                   */
+/* --------------------------------------------- */
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* ❌ NONAKTIFKAN dark mode bawaan Ionic */
+//// @import '@ionic/angular/css/palettes/dark.system.css'; // 🚫 COMMENT atau HAPUS

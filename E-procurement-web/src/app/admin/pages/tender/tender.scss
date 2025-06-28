@@ -1,0 +1,32 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 250px; // Geser isi menjauh dari sidebar tetap
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    margin-left: 1rem;
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+
+  table {
+    min-width: 1000px; // Supaya tabel tidak terlalu sempit
+  }
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}

@@ -1,0 +1,27 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 1rem;
+  margin-left: 250px; // untuk menghindari sidebar
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+
+  table {
+    min-width: 1000px;
+  }
+}

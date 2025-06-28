@@ -1,0 +1,33 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar-vendor></app-navbar-vendor>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-3">Detail Tender</h3>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ tenderDetail.nama }}</h5>
+        <p class="card-text">{{ tenderDetail.deskripsi }}</p>
+        <span class="badge bg-info text-dark">{{ tenderDetail.kategori }}</span>
+        <p class="mt-2 mb-1 text-muted small">
+          Batas Pendaftaran: {{ tenderDetail.batas | date: 'longDate' }}
+        </p>
+        <p class="mb-0 text-muted small">Lokasi: {{ tenderDetail.lokasi }}</p>
+        <p class="mb-0 text-muted small">
+          Nilai Proyek: Rp {{ tenderDetail.nilaiProyek | number }}
+        </p>
+        <a class="btn btn-link p-0 mt-2" [href]="tenderDetail.dokumenRks" target="_blank">
+          Lihat Dokumen RKS
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <a class="btn btn-primary" [routerLink]="['/vendor/submit-penawaran']">
+        Ajukan Penawaran
+      </a>
+    </div>
+  </div>
+</div>

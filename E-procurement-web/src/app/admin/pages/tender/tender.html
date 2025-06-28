@@ -1,0 +1,70 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar></app-navbar>
+
+  <!-- Konten -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Proses Tender</h3>
+
+    <!-- Tabel Tender -->
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Nama Proyek</th>
+            <th>Vendor</th>
+            <th>Dokumen Penawaran</th>
+            <th>Harga Penawaran</th>
+            <th>Status Evaluasi</th>
+            <th>Verifikasi</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of daftarTender">
+            <td>{{ item.namaProyek }}</td>
+            <td>{{ item.vendor }}</td>
+            <td>
+              <a *ngIf="item.dokumenUrl" [href]="item.dokumenUrl" target="_blank" class="btn btn-sm btn-outline-primary">Lihat</a>
+              <span *ngIf="!item.dokumenUrl" class="text-muted">Belum ada</span>
+            </td>
+            <td>
+              <input type="number" class="form-control form-control-sm"
+                     [(ngModel)]="item.penawaran"
+                     [disabled]="item.status === 'Selesai'" />
+            </td>
+            <td>
+              <select class="form-select form-select-sm"
+                      [(ngModel)]="item.status"
+                      [disabled]="item.status === 'Selesai'">
+                <option value="Evaluasi">Evaluasi</option>
+                <option value="Lolos">Lolos</option>
+                <option value="Gugur">Gugur</option>
+              </select>
+              <span *ngIf="item.status === 'Lolos'" class="badge bg-success ms-2">Pemenang</span>
+            </td>
+            <td>
+              <button class="btn btn-outline-success btn-sm"
+                      (click)="verifikasiDokumen(item)"
+                      [disabled]="item.terverifikasi">
+                {{ item.terverifikasi ? 'Terverifikasi' : 'Verifikasi' }}
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary"
+                      (click)="simpanTender(item)"
+                      [disabled]="item.status === 'Selesai'">
+                Simpan
+              </button>
+              <button class="btn btn-sm btn-outline-success ms-2"
+                      (click)="tandaiSelesai(item)"
+                      [disabled]="item.status === 'Selesai' || !item.terverifikasi">
+                Tandai Selesai
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

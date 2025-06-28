@@ -1,0 +1,14 @@
+.navbar .nav-link {
+  color: #6c757d;
+  font-size: 0.85rem;
+  padding: 0.5rem 0;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+  color: #0d6efd;
+}
+
+.navbar i {
+  display: block;
+}

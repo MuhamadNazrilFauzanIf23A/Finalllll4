@@ -1,0 +1,42 @@
+<ion-content class="login-content" fullscreen scroll-y="false">
+  <div class="login-wrapper">
+    <div class="login-box">
+      <h3 class="title">LOGIN</h3>
+      <p class="subtitle">Welcome To</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <!-- Email -->
+        <ion-item lines="none" class="input-item">
+          <ion-input
+            formControlName="email"
+            type="email"
+            placeholder="Email"
+            fill="clear">
+          </ion-input>
+        </ion-item>
+
+        <!-- Password -->
+        <ion-item lines="none" class="input-item">
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Password"
+            fill="clear">
+          </ion-input>
+          <ion-icon
+            slot="end"
+            [name]="showPassword ? 'eye-off' : 'eye'"
+            (click)="togglePassword()"
+            class="eye-icon">
+          </ion-icon>
+        </ion-item>
+
+        <p class="forgot-password" (click)="goToForgotPassword()">Lupa password?</p>
+
+        <ion-button expand="block" type="submit" class="login-button" [disabled]="loginForm.invalid">
+          SIGN IN
+        </ion-button>
+      </form>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,39 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Verifikasi & Persetujuan</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="verifikasi-content" fullscreen>
+    <div class="verifikasi-container">
+      <ion-card *ngFor="let pengajuan of daftarPengajuan" class="verifikasi-card">
+        <ion-card-header>
+          <ion-card-title>{{ pengajuan.namaItem }}</ion-card-title>
+          <ion-card-subtitle>{{ pengajuan.tanggal }}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p class="small">{{ pengajuan.spesifikasi }}</p>
+
+          <ion-chip [color]="getStatusColor(pengajuan.status)" class="status-chip">
+            <ion-label>{{ pengajuan.status }}</ion-label>
+          </ion-chip>
+
+          <div class="action-buttons mt-3">
+            <ion-button size="small" fill="outline" color="primary" (click)="beriCatatan(pengajuan)">Catatan</ion-button>
+            <ion-button size="small" color="success" (click)="setujui(pengajuan)">Setujui</ion-button>
+            <ion-button size="small" color="danger" (click)="tolak(pengajuan)">Tolak</ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-text *ngIf="daftarPengajuan.length === 0" class="no-data">
+        Tidak ada pengajuan menunggu verifikasi.
+      </ion-text>
+    </div>
+  </ion-content>
+
+  <!-- Footer tetap -->
+  <app-sidebar-atasan class="fixed-sidebar"></app-sidebar-atasan>
+</div>

@@ -1,0 +1,51 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar-vendor></app-navbar-vendor>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Hasil Tender</h3>
+
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Nama Proyek</th>
+            <th>Status</th>
+            <th>Nilai Kontrak</th>
+            <th>Purchase Order</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of hasilTenderList">
+            <td>{{ item.namaProyek }}</td>
+            <td>
+              <span class="badge"
+                [ngClass]="{
+                  'bg-success': item.status === 'Menang',
+                  'bg-danger': item.status === 'Tidak Menang'
+                }">
+                {{ item.status }}
+              </span>
+            </td>
+            <td>
+              {{
+                item.status === 'Menang' && item.nilaiKontrak
+                  ? ('Rp ' + item.nilaiKontrak.toLocaleString())
+                  : '-'
+              }}
+            </td>
+            <td>
+              <a *ngIf="item.status === 'Menang'"
+                 class="btn btn-sm btn-outline-primary"
+                 [routerLink]="['/vendor/hasil-tender', item.id]">
+                Lihat PO
+              </a>
+              <span *ngIf="item.status !== 'Menang'" class="text-muted">-</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 250px; // menghindari sidebar di desktop
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
+}

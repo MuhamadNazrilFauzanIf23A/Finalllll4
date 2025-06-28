@@ -1,0 +1,64 @@
+<div class="layout">
+  <app-navbar></app-navbar>
+
+  <div class="main-content p-4 container" *ngIf="permintaan">
+    <h3 class="mb-4 fw-semibold text-primary">Detail Permintaan</h3>
+
+    <div class="card shadow-sm p-4 mb-4">
+      <div class="row mb-3">
+        <strong class="col-sm-4 text-muted">Nama Proyek:</strong>
+        <span class="col-sm-8">{{ permintaan.nama_proyek }}</span>
+      </div>
+      <div class="row mb-3">
+        <strong class="col-sm-4 text-muted">Divisi:</strong>
+        <span class="col-sm-8">{{ permintaan.divisi }}</span>
+      </div>
+      <div class="row mb-3">
+        <strong class="col-sm-4 text-muted">Nominal:</strong>
+        <span class="col-sm-8">Rp {{ permintaan.nominal | number }}</span>
+      </div>
+      <div class="row mb-3">
+        <strong class="col-sm-4 text-muted">Status:</strong>
+        <span class="badge" 
+            [ngClass]="{
+                'bg-success': permintaan.status === 'Disetujui',
+                'bg-warning text-dark': permintaan.status === 'Menunggu',
+                'bg-danger': permintaan.status === 'Ditolak'
+            }">
+        {{ permintaan.status }}
+        </span>
+
+      </div>
+      <div class="row mb-3">
+        <strong class="col-sm-4 text-muted">Tanggal Disetujui:</strong>
+        <span class="col-sm-8">{{ permintaan.tanggal_disetujui | date: 'mediumDate' }}</span>
+      </div>
+      <div class="row mb-1">
+        <strong class="col-sm-4 text-muted">Alasan:</strong>
+        <span class="col-sm-8">{{ permintaan.alasan }}</span>
+      </div>
+    </div>
+
+    <h5 class="fw-semibold text-secondary">Item Pengadaan</h5>
+    <div class="table-responsive mt-3 shadow-sm rounded">
+      <table class="table table-bordered table-sm mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Nama</th>
+            <th>Spesifikasi</th>
+            <th>Kuantitas</th>
+            <th>Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of permintaan.items">
+            <td>{{ item.nama }}</td>
+            <td>{{ item.spesifikasi }}</td>
+            <td>{{ item.kuantitas }}</td>
+            <td>{{ item.satuan }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

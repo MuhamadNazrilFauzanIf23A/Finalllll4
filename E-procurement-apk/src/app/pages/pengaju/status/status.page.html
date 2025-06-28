@@ -1,0 +1,31 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Status Pengajuan</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="status-content" fullscreen>
+    <div class="card-container">
+      <ion-card *ngFor="let item of daftarPengajuan" class="status-card">
+        <ion-card-header>
+          <ion-card-title>{{ item.namaItem }}</ion-card-title>
+          <ion-card-subtitle>{{ item.tanggal }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="small">{{ item.spesifikasi }}</p>
+          <ion-chip [color]="getStatusColor(item.status)" class="status-chip">
+            <ion-label>{{ item.status }}</ion-label>
+          </ion-chip>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Placeholder jika data kosong -->
+      <ion-text *ngIf="daftarPengajuan.length === 0" class="no-data">
+        Belum ada pengajuan yang tercatat.
+      </ion-text>
+    </div>
+  </ion-content>
+
+  <app-sidebar></app-sidebar>
+</div>

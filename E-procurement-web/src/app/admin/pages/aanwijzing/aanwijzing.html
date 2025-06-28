@@ -1,0 +1,76 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar></app-navbar>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Jadwal Aanwijzing</h3>
+
+    <!-- Form Jadwal Aanwijzing -->
+    <form class="row g-3 mb-4" (ngSubmit)="jadwalkanAanwijzing()">
+      <div class="col-md-6">
+        <label class="form-label">Pilih Proyek</label>
+    <select class="form-select" [(ngModel)]="form.pengadaan_id" name="pengadaan_id" required>
+      <option *ngFor="let proyek of daftarPengadaan" [value]="proyek.id">
+        {{ proyek.nama_proyek }} - {{ proyek.divisi }}
+      </option>
+    </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Tanggal Aanwijzing</label>
+        <input type="datetime-local" class="form-control" [(ngModel)]="form.tanggal" name="tanggal" required />
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary w-100 w-md-auto"
+                [disabled]="!form.pengadaan_id || !form.tanggal">Jadwalkan</button>
+      </div>
+    </form>
+
+    <!-- Tabel Daftar Aanwijzing -->
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Nama Proyek</th>
+            <th>Vendor Terdaftar</th>
+            <th>Jadwal Aanwijzing</th>
+            <th>Status</th>
+            <th>Dokumen Penawaran</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of aanwijzingList">
+            <td>{{ a.namaProyek }}</td>
+            <td>{{ a.vendorCount }} Vendor</td>
+            <td>{{ a.tanggalAanwijzing | date: 'medium' }}</td>
+            <td>
+              <span class="badge"
+                    [ngClass]="{
+                      'bg-success': a.status === 'Selesai',
+                      'bg-warning text-dark': a.status === 'Berlangsung',
+                      'bg-secondary': a.status === 'Dijadwalkan'
+                    }">
+                {{ a.status }}
+              </span>
+            </td>
+            <td>
+              <!-- Jika dokumen sudah tersedia -->
+              <a *ngIf="a.dokumenUrl" [href]="a.dokumenUrl" target="_blank"
+                 class="btn btn-outline-primary btn-sm">Lihat</a>
+
+              <!-- Jika dokumen belum tersedia, tampilkan input dan tombol upload -->
+              <div *ngIf="!a.dokumenUrl" class="d-flex flex-column gap-2">
+                <input type="file" class="form-control form-control-sm"
+                       (change)="onFileSelected($event, a.id)" accept="application/pdf" />
+
+                <button class="btn btn-outline-success btn-sm"
+                        [disabled]="!selectedFiles[a.id]"
+                        (click)="uploadSelectedFile(a.id)">Upload</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

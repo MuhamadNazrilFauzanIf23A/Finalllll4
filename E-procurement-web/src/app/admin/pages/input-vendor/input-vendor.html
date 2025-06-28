@@ -1,0 +1,73 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar></app-navbar>
+
+  <!-- Konten -->
+  <div class="main-content p-4">
+    <h3 class="mb-4 fw-bold">Realisasi Pengadaan & Tender Terbuka</h3>
+
+    <!-- 🔶 Form Buat Proyek Pengadaan -->
+    <form class="row g-3 mb-4" (ngSubmit)="tambahPengadaan()">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Pilih Permintaan Pengadaan</label>
+        <select class="form-select" [(ngModel)]="selectedPermintaanId" name="permintaan_id" required>
+          <option *ngFor="let p of daftarPermintaan" [value]="p.id">
+            {{ p.nama_proyek }} - {{ p.divisi }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6 d-flex align-items-end">
+        <button type="submit" class="btn btn-success w-100">
+          <i class="bi bi-plus-circle me-1"></i> Buat Proyek Pengadaan
+        </button>
+      </div>
+    </form>
+
+    <!-- 🔷 Tabel Daftar Proyek Pengadaan -->
+    <h5 class="fw-semibold mb-3">Daftar Proyek Pengadaan</h5>
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>No</th>
+            <th>Nama Proyek</th>
+            <th>Divisi</th>
+            <th>Estimasi Anggaran</th>
+            <th>Status</th>
+            <th class="text-center">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of daftarPengadaan; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ p.nama_proyek }}</td>
+            <td>{{ p.divisi }}</td>
+            <td>{{ p.estimasi_anggaran | currency: 'IDR':'symbol' }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-secondary': p.status === 'draft',
+                'bg-success': p.status === 'published'
+              }">
+                {{ p.status }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button
+                *ngIf="p.status === 'draft'"
+                class="btn btn-sm btn-outline-primary me-2"
+                (click)="terbitkanTender(p.id)">
+                <i class="bi bi-bullhorn"></i> Terbitkan
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="hapusPengadaan(p.id)">
+                <i class="bi bi-trash"></i> Hapus
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="daftarPengadaan.length === 0">
+            <td colspan="6" class="text-center text-muted">Belum ada proyek pengadaan</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

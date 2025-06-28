@@ -1,0 +1,20 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar-vendor></app-navbar-vendor>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Purchase Order Digital</h3>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ purchaseOrder.namaProyek }}</h5>
+        <p><strong>Nomor PO:</strong> {{ purchaseOrder.nomor }}</p>
+        <p><strong>Tanggal Terbit:</strong> {{ purchaseOrder.tanggalTerbit | date: 'longDate' }}</p>
+        <p><strong>Nilai Kontrak:</strong> Rp {{ purchaseOrder.nilai.toLocaleString() }}</p>
+
+        <button class="btn btn-primary" (click)="downloadPO()">Lihat / Download PO</button>
+      </div>
+    </div>
+  </div>
+</div>

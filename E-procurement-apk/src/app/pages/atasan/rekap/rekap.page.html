@@ -1,0 +1,29 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Rekap Pengajuan</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="rekap-content" fullscreen>
+    <div class="rekap-container">
+      <ion-list>
+        <ion-item *ngFor="let data of daftarRekap" class="rekap-item">
+          <ion-label>
+            <h2>{{ data.namaItem }}</h2>
+            <p>{{ data.tanggal }} • Divisi: {{ data.divisi }}</p>
+          </ion-label>
+          <ion-badge [color]="getStatusColor(data.status)" slot="end">
+            {{ data.status }}
+          </ion-badge>
+        </ion-item>
+      </ion-list>
+
+      <ion-text *ngIf="daftarRekap.length === 0" class="no-data">
+        Belum ada data pengajuan.
+      </ion-text>
+    </div>
+  </ion-content>
+
+  <app-sidebar-atasan class="fixed-sidebar"></app-sidebar-atasan>
+</div>

@@ -1,0 +1,55 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <app-navbar-vendor></app-navbar-vendor>
+
+  <!-- Konten Utama -->
+  <div class="main-content p-4">
+    <h3 class="mb-4">Proses Bidding & Evaluasi</h3>
+
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Nama Proyek</th>
+            <th>Harga Penawaran Anda</th>
+            <th>Status Bidding</th>
+            <th>Nilai Evaluasi</th>
+            <th>Catatan Evaluator</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of daftarBidding">
+            <td>{{ item.namaProyek }}</td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                [(ngModel)]="item.penawaran"
+                [disabled]="item.status !== 'Bidding Terbuka'" />
+            </td>
+            <td>
+              <span class="badge"
+                [ngClass]="{
+                  'bg-warning text-dark': item.status === 'Bidding Terbuka',
+                  'bg-info': item.status === 'Evaluasi',
+                  'bg-success': item.status === 'Selesai'
+                }">
+                {{ item.status }}
+              </span>
+            </td>
+            <td>{{ item.nilaiEvaluasi || '-' }}</td>
+            <td>{{ item.catatan || '-' }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" 
+                      (click)="submitBidding(item)" 
+                      [disabled]="item.status !== 'Bidding Terbuka'">
+                Submit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
