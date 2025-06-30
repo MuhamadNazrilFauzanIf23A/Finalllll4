@@ -15,5 +15,10 @@ class Permintaan extends Model
     return $this->hasMany(\App\Models\PermintaanItem::class);
 }
 
+public function user()
+{
+    return $this->belongsTo(UserApk::class, 'user_id');
+}
+
 
 }

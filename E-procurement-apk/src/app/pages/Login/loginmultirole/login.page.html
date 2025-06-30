@@ -5,23 +5,31 @@
       <p class="subtitle">Welcome To</p>
 
       <form [formGroup]="loginForm" (ngSubmit)="login()">
+
         <!-- Email -->
         <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Email</ion-label>
           <ion-input
             formControlName="email"
             type="email"
-            placeholder="Email"
-            fill="clear">
+            placeholder="Masukkan email"
+            fill="outline"
+            required>
           </ion-input>
         </ion-item>
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="error-msg">
+          <small>Email tidak valid</small>
+        </div>
 
         <!-- Password -->
         <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Password</ion-label>
           <ion-input
             [type]="showPassword ? 'text' : 'password'"
             formControlName="password"
-            placeholder="Password"
-            fill="clear">
+            placeholder="Masukkan password"
+            fill="outline"
+            required>
           </ion-input>
           <ion-icon
             slot="end"
@@ -30,10 +38,19 @@
             class="eye-icon">
           </ion-icon>
         </ion-item>
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error-msg">
+          <small>Password wajib diisi</small>
+        </div>
 
+        <!-- Lupa Password -->
         <p class="forgot-password" (click)="goToForgotPassword()">Lupa password?</p>
 
-        <ion-button expand="block" type="submit" class="login-button" [disabled]="loginForm.invalid">
+        <!-- Tombol -->
+        <ion-button
+          expand="block"
+          type="submit"
+          class="login-button"
+          [disabled]="loginForm.invalid">
           SIGN IN
         </ion-button>
       </form>

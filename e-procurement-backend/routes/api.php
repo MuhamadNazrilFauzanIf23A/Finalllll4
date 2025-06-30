@@ -13,7 +13,9 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Vendor\VendorController;
 use App\Http\Controllers\Vendor\VendorAuthController;
 use App\Http\Controllers\Vendor\VendorProfileController;
-
+use App\Http\Controllers\Apk\UserApkAuthController;
+use App\Http\Controllers\Apk\PermintaanApkController;
+use App\Http\Controllers\Apk\ApprovalController;
 /*
 |--------------------------------------------------------------------------
 | 🧑‍💼 Admin Routes (prefix: /admin)
@@ -87,3 +89,28 @@ Route::middleware(['auth:sanctum'])->prefix('vendor')->group(function () {
     Route::post('/upload-legalitas', [VendorProfileController::class, 'uploadDokumen']);
 });
 
+//
+// 📱 APK Routes - Pengaju dan Atasan
+//
+Route::prefix('apk')->group(function () {
+    Route::post('/login', [UserApkAuthController::class, 'login']);
+    Route::post('/forgot-password', [UserApkAuthController::class, 'forgotPassword']); // optional
+    Route::post('/reset-password', [UserApkAuthController::class, 'resetPassword']);   // optional
+
+    Route::middleware(['auth:sanctum'])->group(function () {
+        // 🔐 Authenticated routes
+        Route::get('/me', [UserApkAuthController::class, 'me']);
+        Route::post('/logout', [UserApkAuthController::class, 'logout']);
+
+        // 📝 Pengajuan Permintaan (oleh pengaju)
+        Route::get('/permintaan', [PermintaanApkController::class, 'index']);
+        Route::post('/permintaan', [PermintaanApkController::class, 'store']);
+        Route::get('/permintaan/{id}', [PermintaanApkController::class, 'show']);
+        Route::get('/permintaan/riwayat', [PermintaanApkController::class, 'riwayat']);
+
+        // ✅ Approval oleh Atasan
+        Route::get('/approval', [ApprovalController::class, 'index']); // lihat permintaan bawahan
+        Route::post('/approval/{id}/setujui', [ApprovalController::class, 'approve']);
+        Route::post('/approval/{id}/tolak', [ApprovalController::class, 'reject']);
+    });
+});

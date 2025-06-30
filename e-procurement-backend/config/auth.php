@@ -9,8 +9,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web', // default tetap web
-        'passwords' => 'users',
+        'guard' => 'admin', // default guard misal untuk backend Laravel (admin)
+        'passwords' => 'admins',
     ],
 
     /*
@@ -22,19 +22,25 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
         ],
 
-        // 🔐 Guard vendor dengan sanctum
+        // 🔐 Guard untuk admin (web/admin panel)
+        'admin' => [
+            'driver' => 'sanctum',
+            'provider' => 'admins',
+        ],
+
+        // 🔐 Guard untuk vendor publik
         'vendor' => [
             'driver' => 'sanctum',
             'provider' => 'vendors',
         ],
 
-        // (opsional) api default bisa tetap dipakai juga
-        'api' => [
+        // 🔐 Guard untuk APK (pengaju/atasan)
+        'apk' => [
             'driver' => 'sanctum',
-            'provider' => 'users',
+            'provider' => 'usersapk',
         ],
     ],
 
@@ -45,14 +51,22 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        // 👤 Admin (purchasing/internal)
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Admin::class,
         ],
 
+        // 👤 Vendor eksternal
         'vendors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Vendor::class,
+        ],
+
+        // 👤 Pengaju dan Atasan (APK Mobile)
+        'usersapk' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\UserApk::class,
         ],
     ],
 
@@ -63,8 +77,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'admins' => [
+            'provider' => 'admins',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
@@ -72,7 +86,14 @@ return [
 
         'vendors' => [
             'provider' => 'vendors',
-            'table' => 'password_reset_tokens', // atau password_resets jika pakai Laravel <10
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'usersapk' => [
+            'provider' => 'usersapk',
+            'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],

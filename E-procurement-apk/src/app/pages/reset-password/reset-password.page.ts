@@ -6,13 +6,13 @@ import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   standalone: true,
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.page.html',
-  styleUrls: ['./forgot-password.page.scss'],
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.page.html',
+  styleUrls: ['./reset-password.page.scss'],
   imports: [CommonModule, IonicModule, ReactiveFormsModule],
 })
-export class ForgotPasswordPage {
-  forgotForm: FormGroup;
+export class ResetPasswordPage {
+  resetForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -20,38 +20,35 @@ export class ForgotPasswordPage {
     private navCtrl: NavController,
     private authService: AuthService
   ) {
-    this.forgotForm = this.fb.group({
+    this.resetForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
+      token: ['', Validators.required],
+      password: ['', Validators.required],
+      password_confirmation: ['', Validators.required],
     });
   }
 
   async submit() {
-    if (this.forgotForm.invalid) return;
+    if (this.resetForm.invalid) return;
 
-    const email = this.forgotForm.value.email;
-
-    this.authService.forgotPassword(email).subscribe({
+    this.authService.resetPassword(this.resetForm.value).subscribe({
       next: async (res) => {
         const toast = await this.toastCtrl.create({
-          message: 'Token telah dikirim ke email. Lanjutkan ke halaman Reset Password.',
+          message: res.message || 'Password berhasil direset.',
           duration: 3000,
           color: 'success',
         });
         await toast.present();
-        // tidak redirect langsung, biarkan user klik sendiri
+        this.navCtrl.navigateBack('/login');
       },
       error: async (err) => {
         const toast = await this.toastCtrl.create({
-          message: err.error?.message || 'Gagal mengirim link reset.',
+          message: err.error?.message || 'Reset gagal. Cek data Anda.',
           duration: 3000,
           color: 'danger',
         });
         await toast.present();
       }
     });
-  }
-
-  goToReset() {
-    this.navCtrl.navigateForward('/reset-password');
   }
 }
