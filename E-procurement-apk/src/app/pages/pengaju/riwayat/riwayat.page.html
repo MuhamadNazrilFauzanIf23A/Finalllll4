@@ -9,18 +9,18 @@
     <div class="riwayat-container">
       <ion-card *ngFor="let item of riwayatList" class="riwayat-card">
         <ion-card-header>
-          <ion-card-title>{{ item.namaItem }}</ion-card-title>
-          <ion-card-subtitle>{{ item.tanggal }}</ion-card-subtitle>
+          <ion-card-title>{{ item.nama_proyek }}</ion-card-title>
+          <ion-card-subtitle>{{ item.tanggal | date: 'mediumDate' }}</ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content>
-          <p class="alasan">{{ item.alasan }}</p>
 
-          <ng-container *ngIf="item.dokumen">
-            <ion-button fill="clear" size="small" color="primary" (click)="lihatDokumen(item.dokumen)">
-              <ion-icon name="document-outline" slot="start"></ion-icon>
-              Lihat Dokumen
-            </ion-button>
-          </ng-container>
+        <ion-card-content>
+          <p class="alasan"><strong>Alasan:</strong> {{ item.alasan }}</p>
+
+          <ion-button *ngIf="item.dokumen" fill="outline" color="primary" size="small"
+                      (click)="lihatDokumen(item.dokumen)">
+            <ion-icon slot="start" name="document-outline"></ion-icon>
+            Lihat Dokumen
+          </ion-button>
         </ion-card-content>
       </ion-card>
 

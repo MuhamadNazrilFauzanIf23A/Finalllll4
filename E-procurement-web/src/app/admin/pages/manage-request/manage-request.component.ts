@@ -17,7 +17,7 @@ import { PermintaanService } from '../../../core/service/permintaan.service';
 })
 export class ManageRequestsComponent implements OnInit {
   daftarPermintaan: any[] = [];
-  loading = false;
+  loading: boolean = false;
 
   constructor(private permintaanService: PermintaanService) {}
 
@@ -26,7 +26,13 @@ export class ManageRequestsComponent implements OnInit {
 
     this.permintaanService.getAll().subscribe({
       next: (res) => {
-        this.daftarPermintaan = res;
+        this.daftarPermintaan = res.map((permintaan: any) => ({
+          ...permintaan,
+          spesifikasi: permintaan.spesifikasi || '-',    // Default if null/undefined
+          kuantitas: permintaan.kuantitas ?? 0,          // Accept 0 but fallback to 0 if null
+          alasan: permintaan.alasan || 'N/A',            // Default if null
+          file_pdf: permintaan.file_pdf || null          // Optional, for PDF preview
+        }));
         this.loading = false;
       },
       error: (err) => {

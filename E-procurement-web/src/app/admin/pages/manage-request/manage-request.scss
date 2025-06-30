@@ -25,3 +25,24 @@
     min-width: 900px; // Biar tidak mepet di mobile dan tetap terbaca
   }
 }
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.9rem;
+}
+
+.badge.bg-success {
+  background-color: #28a745;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107;
+}
+
+.badge.bg-danger {
+  background-color: #dc3545;
+}

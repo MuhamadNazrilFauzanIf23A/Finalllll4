@@ -10,21 +10,29 @@ export class PermintaanService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<any> {
-    const token = localStorage.getItem('token'); 
-    const headers = new HttpHeaders({
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
+  }
 
-    return this.http.get(this.apiUrl, { headers });
+  getAll(): Observable<any> {
+    return this.http.get(this.apiUrl, {
+      headers: this.getAuthHeaders()
+    });
   }
 
   getById(id: number): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+    return this.http.get(`${this.apiUrl}/${id}`, {
+      headers: this.getAuthHeaders()
     });
+  }
 
-    return this.http.get(`${this.apiUrl}/${id}`, { headers });
+  createPermintaan(data: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, data, {
+      headers: this.getAuthHeaders()
+      // Jangan set Content-Type secara manual untuk FormData
+    });
   }
 }

@@ -8,43 +8,48 @@
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>No</th>
-            <th>Nama Proyek</th>
-            <th>Divisi</th>
-            <th>Nominal</th>
-            <th>Status</th>
-            <th>Tanggal Disetujui</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let permintaan of daftarPermintaan; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ permintaan.nama_proyek }}</td>
-            <td>{{ permintaan.divisi }}</td>
-            <td>Rp {{ permintaan.nominal | number }}</td>
-            <td>
-              <span class="badge"
-                [ngClass]="{
-                  'bg-success': permintaan.status === 'Disetujui',
-                  'bg-warning text-dark': permintaan.status === 'Menunggu',
-                  'bg-danger': permintaan.status === 'Ditolak'
-                }">
-                {{ permintaan.status }}
-              </span>
-            </td>
-            <td>{{ permintaan.tanggal_disetujui | date: 'mediumDate' }}</td>
-            <td>
-              <button
-                class="btn btn-sm btn-outline-primary"
-                [routerLink]="['/admin/manage-requests', permintaan.id]">
-                Lihat Detail
-              </button>
-            </td>
-          </tr>
-        </tbody>
+<thead class="table-light">
+  <tr>
+    <th>No</th>
+    <th>Nama Proyek</th>
+    <th>Divisi</th>
+    <th>Nominal</th>
+    <th>Spesifikasi</th>
+    <th>Kuantitas</th>
+    <th>Alasan</th>
+    <th>Status</th>
+    <th>Tanggal Disetujui</th>
+    <th>File PDF</th> <!-- ✅ kolom tambahan -->
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let permintaan of daftarPermintaan; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ permintaan.nama_proyek }}</td>
+    <td>{{ permintaan.divisi }}</td>
+    <td>Rp {{ permintaan.nominal | number }}</td>
+    <td>{{ permintaan.spesifikasi }}</td>
+    <td>{{ permintaan.kuantitas }}</td>
+    <td>{{ permintaan.alasan }}</td>
+    <td>
+      <span class="badge"
+        [ngClass]="{
+          'bg-success': permintaan.status === 'Disetujui',
+          'bg-warning text-dark': permintaan.status === 'Menunggu',
+          'bg-danger': permintaan.status === 'Ditolak'
+        }">
+        {{ permintaan.status }}
+      </span>
+    </td>
+    <td>{{ permintaan.tanggal_disetujui | date: 'mediumDate' }}</td>
+    <td>
+      <a *ngIf="permintaan.file_pdf" [href]="permintaan.file_pdf" target="_blank">
+        <i class="bi bi-file-earmark-pdf"></i> Lihat
+      </a>
+      <span *ngIf="!permintaan.file_pdf" class="text-muted">-</span>
+    </td>
+  </tr>
+</tbody>
       </table>
     </div>
   </div>

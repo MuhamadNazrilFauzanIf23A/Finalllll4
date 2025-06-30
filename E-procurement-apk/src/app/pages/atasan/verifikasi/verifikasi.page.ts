@@ -1,50 +1,37 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SidebarAtasanComponent } from 'src/app/components/sidebar-atasan/sidebar-atasan.component';
+import { ApprovalService, Pengajuan } from 'src/app/core/services/approval.service';
 
 @Component({
   selector: 'app-verifikasi',
   standalone: true,
   templateUrl: './verifikasi.page.html',
   styleUrls: ['./verifikasi.page.scss'],
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    SidebarAtasanComponent
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, SidebarAtasanComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class VerifikasiPage {
-  daftarPengajuan = [
-    {
-      namaItem: 'Laptop ASUS A416',
-      tanggal: '2025-06-27',
-      spesifikasi: 'Intel i5, 8GB RAM, SSD 512GB',
-      status: 'Menunggu',
-    },
-    {
-      namaItem: 'Laptop ASUS A416',
-      tanggal: '2025-06-27',
-      spesifikasi: 'Intel i5, 8GB RAM, SSD 512GB',
-      status: 'Menunggu',
-    },
-    {
-      namaItem: 'Laptop ASUS A416',
-      tanggal: '2025-06-27',
-      spesifikasi: 'Intel i5, 8GB RAM, SSD 512GB',
-      status: 'Menunggu',
-    },
-    {
-      namaItem: 'Laptop ASUS A416',
-      tanggal: '2025-06-27',
-      spesifikasi: 'Intel i5, 8GB RAM, SSD 512GB',
-      status: 'Disetujui',
-    },
-    // Tambahkan data lain jika perlu
-  ];
+export class VerifikasiPage implements OnInit {
+  daftarPengajuan: Pengajuan[] = [];
+
+  constructor(private approvalService: ApprovalService) {}
+
+  ngOnInit() {
+    this.loadPengajuan();
+  }
+
+  loadPengajuan() {
+    this.approvalService.getMenunggu().subscribe({
+      next: (res: any) => {
+        this.daftarPengajuan = res.data ?? [];
+      },
+      error: (err) => {
+        console.error('❌ Gagal ambil data:', err);
+      }
+    });
+  }
 
   getStatusColor(status: string): string {
     switch (status.toLowerCase()) {
@@ -55,15 +42,31 @@ export class VerifikasiPage {
     }
   }
 
-  setujui(pengajuan: any) {
-    console.log('✅ Disetujui:', pengajuan);
+  setujui(pengajuan: Pengajuan) {
+    this.approvalService.setujui(pengajuan.id).subscribe({
+      next: () => {
+        pengajuan.status = 'Disetujui';
+        pengajuan.tanggal_disetujui = new Date().toISOString();
+        // atau bisa pakai this.loadPengajuan(); untuk sinkronisasi ulang
+      },
+      error: (err) => {
+        console.error('❌ Gagal menyetujui:', err);
+      }
+    });
   }
 
-  tolak(pengajuan: any) {
-    console.log('❌ Ditolak:', pengajuan);
+  tolak(pengajuan: Pengajuan) {
+    this.approvalService.tolak(pengajuan.id).subscribe({
+      next: () => {
+        pengajuan.status = 'Ditolak';
+      },
+      error: (err) => {
+        console.error('❌ Gagal menolak:', err);
+      }
+    });
   }
 
-  beriCatatan(pengajuan: any) {
-    console.log('📝 Catatan untuk:', pengajuan);
+  beriCatatan(pengajuan: Pengajuan) {
+    console.log('📝 Tambah catatan (fitur opsional)', pengajuan);
   }
 }

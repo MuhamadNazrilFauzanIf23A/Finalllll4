@@ -7,33 +7,53 @@
 
   <ion-content class="verifikasi-content" fullscreen>
     <div class="verifikasi-container">
+
       <ion-card *ngFor="let pengajuan of daftarPengajuan" class="verifikasi-card">
         <ion-card-header>
-          <ion-card-title>{{ pengajuan.namaItem }}</ion-card-title>
-          <ion-card-subtitle>{{ pengajuan.tanggal }}</ion-card-subtitle>
+          <ion-card-title>{{ pengajuan.nama_proyek }}</ion-card-title>
+          <ion-card-subtitle>
+            {{ pengajuan.tanggal_disetujui || pengajuan.created_at | date: 'mediumDate' }}
+          </ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
-          <p class="small">{{ pengajuan.spesifikasi }}</p>
+          <p class="small">Spesifikasi: {{ pengajuan.spesifikasi }}</p>
+          <p class="small">Kuantitas: {{ pengajuan.kuantitas }}</p>
+          <p class="small">Nominal: Rp {{ pengajuan.nominal | number:'1.0-0' }}</p>
+          <p class="small">Alasan: {{ pengajuan.alasan }}</p>
 
           <ion-chip [color]="getStatusColor(pengajuan.status)" class="status-chip">
             <ion-label>{{ pengajuan.status }}</ion-label>
           </ion-chip>
 
-          <div class="action-buttons mt-3">
-            <ion-button size="small" fill="outline" color="primary" (click)="beriCatatan(pengajuan)">Catatan</ion-button>
-            <ion-button size="small" color="success" (click)="setujui(pengajuan)">Setujui</ion-button>
-            <ion-button size="small" color="danger" (click)="tolak(pengajuan)">Tolak</ion-button>
+          <div class="button-group mt-3" *ngIf="pengajuan.status === 'Menunggu'">
+            <ion-button expand="block" color="success" (click)="setujui(pengajuan)">
+              <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+              Setujui
+            </ion-button>
+            <ion-button expand="block" color="danger" (click)="tolak(pengajuan)">
+              <ion-icon name="close-circle" slot="start"></ion-icon>
+              Tolak
+            </ion-button>
+          </div>
+
+          <div *ngIf="pengajuan.file_pdf" class="mt-3">
+            <ion-button expand="block" fill="outline" color="medium" target="_blank"
+                        [href]="pengajuan.file_pdf">
+              <ion-icon name="document-outline" slot="start"></ion-icon>
+              Lihat Dokumen
+            </ion-button>
           </div>
         </ion-card-content>
+
       </ion-card>
 
       <ion-text *ngIf="daftarPengajuan.length === 0" class="no-data">
         Tidak ada pengajuan menunggu verifikasi.
       </ion-text>
+
     </div>
   </ion-content>
 
-  <!-- Footer tetap -->
   <app-sidebar-atasan class="fixed-sidebar"></app-sidebar-atasan>
 </div>

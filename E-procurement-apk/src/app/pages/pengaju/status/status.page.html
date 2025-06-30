@@ -1,6 +1,6 @@
 <div class="ion-page">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="light">
       <ion-title>Status Pengajuan</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -9,18 +9,23 @@
     <div class="card-container">
       <ion-card *ngFor="let item of daftarPengajuan" class="status-card">
         <ion-card-header>
-          <ion-card-title>{{ item.namaItem }}</ion-card-title>
-          <ion-card-subtitle>{{ item.tanggal }}</ion-card-subtitle>
+          <ion-card-title>{{ item.nama_proyek }}</ion-card-title>
+          <ion-card-subtitle>{{ item.tanggal | date: 'mediumDate' }}</ion-card-subtitle>
         </ion-card-header>
+
         <ion-card-content>
-          <p class="small">{{ item.spesifikasi }}</p>
-          <ion-chip [color]="getStatusColor(item.status)" class="status-chip">
-            <ion-label>{{ item.status }}</ion-label>
-          </ion-chip>
+          <p class="small"><strong>Spesifikasi:</strong> {{ item.spesifikasi }}</p>
+
+          <div class="status-row">
+            <ion-label class="status-label">Status:</ion-label>
+            <ion-chip [color]="getStatusColor(item.status)" class="status-chip">
+              <ion-icon [name]="getStatusIcon(item.status)" slot="start"></ion-icon>
+              <ion-label>{{ item.status }}</ion-label>
+            </ion-chip>
+          </div>
         </ion-card-content>
       </ion-card>
 
-      <!-- Placeholder jika data kosong -->
       <ion-text *ngIf="daftarPengajuan.length === 0" class="no-data">
         Belum ada pengajuan yang tercatat.
       </ion-text>

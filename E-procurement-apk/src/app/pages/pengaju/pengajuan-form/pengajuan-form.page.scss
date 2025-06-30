@@ -62,3 +62,18 @@ ion-button.btn-ajukan {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   margin-top: 20px;
 }
+
+@media screen and (max-width: 480px) {
+  .form-card {
+    padding: 16px !important;
+  }
+
+  ion-input::part(native),
+  ion-textarea::part(native) {
+    font-size: 14px;
+  }
+
+  .icon-header {
+    font-size: 40px;
+  }
+}

@@ -1,7 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { SidebarAtasanComponent } from 'src/app/components/sidebar-atasan/sidebar-atasan.component';
+import { PermintaanService } from 'src/app/core/services/permintaan.service'; 
 
 @Component({
   selector: 'app-rekap',
@@ -9,47 +10,32 @@ import { SidebarAtasanComponent } from 'src/app/components/sidebar-atasan/sideba
   imports: [CommonModule, IonicModule, SidebarAtasanComponent],
   templateUrl: './rekap.page.html',
   styleUrls: ['./rekap.page.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class RekapPage {
-  daftarRekap = [
-    {
-      namaItem: 'Printer Epson L3210',
-      tanggal: '2025-06-25',
-      divisi: 'IT',
-      status: 'Disetujui'
-    },
-    {
-      namaItem: 'Kursi Ergonomis',
-      tanggal: '2025-06-24',
-      divisi: 'HRD',
-      status: 'Menunggu'
-    },
-    {
-      namaItem: 'Kamera DSLR',
-      tanggal: '2025-06-23',
-      divisi: 'Marketing',
-      status: 'Ditolak'
-    },
-    {
-      namaItem: 'Kamera DSLR',
-      tanggal: '2025-06-23',
-      divisi: 'Marketing',
-      status: 'Ditolak'
-    },
-    {
-      namaItem: 'Kamera DSLR',
-      tanggal: '2025-06-23',
-      divisi: 'Marketing',
-      status: 'Ditolak'
-    },
-    {
-      namaItem: 'Kamera DSLR',
-      tanggal: '2025-06-23',
-      divisi: 'Marketing',
-      status: 'Ditolak'
-    },
-  ];
+export class RekapPage implements OnInit {
+  daftarRekap: any[] = []; // Data pengajuan yang akan ditampilkan
+
+  constructor(private permintaanService: PermintaanService) {}
+
+  ngOnInit() {
+    this.loadRekapData(); // Ambil data ketika halaman pertama kali dibuka
+  }
+
+  loadRekapData() {
+    this.permintaanService.getUserPermintaan().subscribe({
+      next: (res) => {
+        console.log('Data rekap diterima:', res);
+        this.daftarRekap = res.map((item: any) => ({
+          nama_proyek: item.nama_proyek,
+          tanggal: item.tanggal_disetujui || item.created_at,
+          divisi: item.divisi,
+          status: item.status,
+        }));
+      },
+      error: (err) => {
+        console.error('❌ Gagal mengambil data rekap:', err);
+      }
+    });
+  }
 
   getStatusColor(status: string): string {
     switch (status.toLowerCase()) {

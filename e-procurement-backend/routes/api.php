@@ -103,14 +103,15 @@ Route::prefix('apk')->group(function () {
         Route::post('/logout', [UserApkAuthController::class, 'logout']);
 
         // 📝 Pengajuan Permintaan (oleh pengaju)
-        Route::get('/permintaan', [PermintaanApkController::class, 'index']);
-        Route::post('/permintaan', [PermintaanApkController::class, 'store']);
-        Route::get('/permintaan/{id}', [PermintaanApkController::class, 'show']);
-        Route::get('/permintaan/riwayat', [PermintaanApkController::class, 'riwayat']);
+        Route::post('/permintaan', [PermintaanController::class, 'store']); // 🔄 dari APK
+        Route::get('/permintaan', [PermintaanController::class, 'userIndex']); 
 
         // ✅ Approval oleh Atasan
-        Route::get('/approval', [ApprovalController::class, 'index']); // lihat permintaan bawahan
-        Route::post('/approval/{id}/setujui', [ApprovalController::class, 'approve']);
-        Route::post('/approval/{id}/tolak', [ApprovalController::class, 'reject']);
-    });
+            Route::get('/approval', [ApprovalController::class, 'index']); // 🟡 Ambil semua permintaan yang perlu diverifikasi
+            Route::post('/approval/{id}/setujui', [ApprovalController::class, 'approve']); // 🟢 Setujui
+            Route::post('/approval/{id}/tolak', [ApprovalController::class, 'reject']);    // 🔴 Tolak
+        });
+
+        // rekap
+        Route::get('/rekap-pengajuan', [PengajuanController::class, 'getRekapPengajuan']);
 });

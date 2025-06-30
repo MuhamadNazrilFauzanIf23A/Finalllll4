@@ -66,10 +66,17 @@ ion-chip[color="danger"] {
   --background: #dc3545;
 }
 
-.action-buttons {
+.button-group {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+
+  ion-button {
+    font-weight: 500;
+    --border-radius: 12px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
 }
 
 .no-data {

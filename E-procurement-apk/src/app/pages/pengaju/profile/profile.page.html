@@ -1,24 +1,23 @@
 <ion-page>
   <ion-header>
-<ion-toolbar color="light">
-  <ion-title>Profil Saya</ion-title>
-</ion-toolbar>
-
+    <ion-toolbar color="light">
+      <ion-title>Profil Saya</ion-title>
+    </ion-toolbar>
   </ion-header>
 
   <ion-content class="profile-content" fullscreen>
     <div class="profile-container">
       <div class="profile-card">
         <ion-avatar class="profile-avatar">
-          <img src="https://ui-avatars.com/api/?name={{ user.nama }}&background=0D6EFD&color=fff" alt="Avatar" />
+          <img *ngIf="user?.nama" [src]="'https://ui-avatars.com/api/?name=' + user.nama + '&background=0D6EFD&color=fff'" alt="Avatar" />
         </ion-avatar>
 
-        <h2 class="profile-name">{{ user.nama }}</h2>
-        <p class="profile-role">{{ user.role }}</p>
+        <h2 class="profile-name">{{ user?.nama }}</h2>
+        <p class="profile-role">{{ user?.divisi }}</p>
 
         <ion-item lines="none" class="profile-info">
           <ion-icon slot="start" name="mail-outline"></ion-icon>
-          <ion-label>{{ user.email }}</ion-label>
+          <ion-label>{{ user?.email }}</ion-label>
         </ion-item>
       </div>
     </div>

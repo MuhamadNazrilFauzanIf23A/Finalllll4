@@ -56,12 +56,5 @@ export const adminRoutes: Routes = [
       import('./pages/laporan/laporan.component').then(m => m.LaporanComponent),
     title: 'Laporan Pengadaan',
     canActivate: [authGuard]
-  },
-  {
-    path: 'manage-requests/:id',
-    loadComponent: () =>
-      import('./pages/manage-request/detail-request.component').then(m => m.DetailRequestComponent),
-    title: 'Detail Permintaan',
-    canActivate: [authGuard]
   }
 ];

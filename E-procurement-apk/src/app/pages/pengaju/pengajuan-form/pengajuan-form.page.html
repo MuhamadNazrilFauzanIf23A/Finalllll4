@@ -35,6 +35,14 @@
           </ion-item>
           <p class="form-text mb-3">Jumlah unit yang dibutuhkan</p>
 
+          <!-- Nominal -->
+          <ion-item lines="none" class="mb-1 custom-input">
+            <ion-icon slot="start" name="cash-outline"></ion-icon>
+            <ion-input type="number" min="0" placeholder="Nominal (Estimasi Biaya)" formControlName="nominal" fill="solid"></ion-input>
+          </ion-item>
+          <p class="form-text mb-3">Estimasi total biaya (dalam Rupiah)</p>
+
+
           <!-- Alasan -->
           <ion-item lines="none" class="mb-1 custom-input">
             <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
@@ -58,10 +66,16 @@
           <!-- Upload -->
           <ion-item lines="none" class="mb-1 custom-input">
             <ion-icon slot="start" name="attach-outline"></ion-icon>
-            <input type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx,.jpg,.png"
+            <input
+              type="file"
+              required
+              (change)="onFileSelected($event)"
+              accept=".pdf"
               style="width: 100%; font-size: 14px; border: none;" />
           </ion-item>
-          <p class="form-text mb-3">Upload dokumen pendukung (opsional)</p>
+          <p class="form-text mb-3 text-danger" *ngIf="isSubmitted && !selectedFile">
+            File PDF wajib diunggah
+          </p>
 
           <!-- Tombol -->
           <ion-button expand="block" type="submit" class="btn-ajukan rounded-pill mt-3">

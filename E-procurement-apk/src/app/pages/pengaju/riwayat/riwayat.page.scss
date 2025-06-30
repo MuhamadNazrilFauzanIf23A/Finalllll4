@@ -46,3 +46,9 @@ ion-card-subtitle {
   margin-top: 24px;
   text-align: center;
 }
+
+.riwayat-card:not(:last-child) {
+  border-bottom: 1px solid #f1f1f1;
+  margin-bottom: 4px;
+}
+
