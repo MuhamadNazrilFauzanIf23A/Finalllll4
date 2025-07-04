@@ -8,13 +8,53 @@
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ purchaseOrder.namaProyek }}</h5>
-        <p><strong>Nomor PO:</strong> {{ purchaseOrder.nomor }}</p>
-        <p><strong>Tanggal Terbit:</strong> {{ purchaseOrder.tanggalTerbit | date: 'longDate' }}</p>
-        <p><strong>Nilai Kontrak:</strong> Rp {{ purchaseOrder.nilai.toLocaleString() }}</p>
+        <!-- Menampilkan Nama Proyek -->
+        <h5 class="card-title">{{ purchaseOrder?.namaProyek }}</h5>
 
-        <button class="btn btn-primary" (click)="downloadPO()">Lihat / Download PO</button>
+        <!-- Menampilkan Status -->
+        <p><strong>Status:</strong> 
+          <span class="badge"
+            [ngClass]="{
+              'bg-success': purchaseOrder?.status === 'Menang',
+              'bg-danger': purchaseOrder?.status !== 'Menang'
+            }">
+            {{ purchaseOrder?.status }}
+          </span>
+        </p>
+
+        <!-- Menampilkan Nilai Kontrak -->
+        <p><strong>Nilai Kontrak:</strong> 
+          Rp {{ purchaseOrder?.nilaiKontrak?.toLocaleString() || '0' }}
+        </p>
+
+        <!-- Tombol untuk Download PO -->
+        <!-- Tombol untuk Download PO -->
+<button class="btn btn-primary" (click)="downloadPO()" [disabled]="!purchaseOrder?.fileUrl">Lihat / Download PO</button>
+
       </div>
     </div>
+
+    <hr class="my-4" />
+
+    <div class="card upload-card">
+      <h5>Upload Bukti Pembayaran</h5>
+      <form (ngSubmit)="kirimPembayaran()" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="buktiPembayaran" class="form-label">File Bukti Pembayaran (PDF / JPG / PNG)</label>
+          <input type="file"
+                class="form-control"
+                id="buktiPembayaran"
+                (change)="onFileSelected($event)"
+                accept=".pdf,.jpg,.jpeg,.png" />
+        </div>
+
+        <button class="btn btn-success"
+                type="submit"
+                [disabled]="!selectedFile">
+          Kirim Pembayaran
+        </button>
+      </form>
+    </div>
+
   </div>
 </div>

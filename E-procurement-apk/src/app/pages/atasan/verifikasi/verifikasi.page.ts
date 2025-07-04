@@ -42,12 +42,15 @@ export class VerifikasiPage implements OnInit {
     }
   }
 
-  setujui(pengajuan: Pengajuan) {
-    this.approvalService.setujui(pengajuan.id).subscribe({
+  // Fungsi untuk menyetujui pengajuan
+  setujui(id: number) {
+    this.approvalService.setujui(id).subscribe({
       next: () => {
-        pengajuan.status = 'Disetujui';
-        pengajuan.tanggal_disetujui = new Date().toISOString();
-        // atau bisa pakai this.loadPengajuan(); untuk sinkronisasi ulang
+        const pengajuan = this.daftarPengajuan.find(p => p.id === id);
+        if (pengajuan) {
+          pengajuan.status = 'Disetujui';
+          pengajuan.tanggal_disetujui = new Date().toISOString();
+        }
       },
       error: (err) => {
         console.error('❌ Gagal menyetujui:', err);
@@ -55,18 +58,18 @@ export class VerifikasiPage implements OnInit {
     });
   }
 
-  tolak(pengajuan: Pengajuan) {
-    this.approvalService.tolak(pengajuan.id).subscribe({
+  // Fungsi untuk menolak pengajuan
+  tolak(id: number) {
+    this.approvalService.tolak(id).subscribe({
       next: () => {
-        pengajuan.status = 'Ditolak';
+        const pengajuan = this.daftarPengajuan.find(p => p.id === id);
+        if (pengajuan) {
+          pengajuan.status = 'Ditolak';
+        }
       },
       error: (err) => {
         console.error('❌ Gagal menolak:', err);
       }
     });
-  }
-
-  beriCatatan(pengajuan: Pengajuan) {
-    console.log('📝 Tambah catatan (fitur opsional)', pengajuan);
   }
 }

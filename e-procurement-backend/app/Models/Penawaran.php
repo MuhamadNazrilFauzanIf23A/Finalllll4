@@ -26,4 +26,9 @@ class Penawaran extends Model
     {
         return $this->belongsTo(\App\Models\Pengadaan::class);
     }
+
+    public function purchaseOrder()
+{
+    return $this->hasOne(PurchaseOrder::class);
+}
 }

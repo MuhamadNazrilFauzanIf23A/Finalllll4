@@ -46,8 +46,15 @@
 
 .profile-role {
   font-size: 14px;
-  color: #6c757d;
+  color: #000000;
   margin-bottom: 16px;
+}
+
+.profile-role-badge {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+  margin-top: 4px;
 }
 
 .profile-info {
@@ -59,3 +66,14 @@
   font-size: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
+/* Styling untuk tombol Logout agar berada di atas nav bottom */
+.logout-button {
+  position: fixed;
+  bottom: 100px;  // Atur agar tombol sedikit lebih tinggi dari nav bottom
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;  // Sesuaikan ukuran tombol dengan lebar layar
+  margin-bottom: 16px;  // Sedikit ruang di bawah tombol
+}
+  

@@ -34,6 +34,7 @@ export class VendorProfileComponent implements OnInit {
     this.loadProfile();
   }
 
+  // Mengambil data profil vendor
   loadProfile() {
     this.vendorService.getProfile().subscribe({
       next: (data) => {
@@ -61,6 +62,7 @@ export class VendorProfileComponent implements OnInit {
     });
   }
 
+  // Fungsi untuk mendownload dokumen legalitas
   downloadDokumen() {
     if (this.vendorProfile.dokumenLegalitas) {
       const url = `http://localhost:8000/storage/${this.vendorProfile.dokumenLegalitas}`;
@@ -70,6 +72,7 @@ export class VendorProfileComponent implements OnInit {
     }
   }
 
+  // Fungsi untuk menangani perubahan file dokumen legalitas
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
@@ -77,17 +80,26 @@ export class VendorProfileComponent implements OnInit {
     }
   }
 
+  // Fungsi untuk mengaktifkan mode edit
   enableEdit() {
     this.editMode = true;
   }
 
+  // Fungsi untuk membatalkan perubahan dan kembali ke data awal
   cancelEdit() {
     this.editMode = false;
     this.selectedFile = null;
     this.loadProfile(); // Kembalikan data dari backend
   }
 
+  // Fungsi untuk menyimpan perubahan profil
   saveProfile() {
+    // Validasi data profil sebelum dikirim ke backend
+    if (!this.vendorProfile.namaPerusahaan || !this.vendorProfile.email || !this.vendorProfile.telepon) {
+      alert('Nama Perusahaan, Email, dan Telepon wajib diisi!');
+      return;
+    }
+
     const updatedData = {
       nama_perusahaan: this.vendorProfile.namaPerusahaan,
       alamat: this.vendorProfile.alamat,
@@ -99,15 +111,17 @@ export class VendorProfileComponent implements OnInit {
       kategori: this.vendorProfile.kategori
     };
 
+    // Kirim data update profil ke backend
     this.vendorService.updateProfile(updatedData).subscribe({
       next: () => {
         if (this.selectedFile) {
+          // Jika ada file dokumen legalitas yang dipilih, upload dokumen
           this.vendorService.uploadLegalitas(this.selectedFile).subscribe({
             next: () => {
               alert('Profil dan dokumen berhasil disimpan!');
               this.editMode = false;
               this.selectedFile = null;
-              this.loadProfile();
+              this.loadProfile(); // Muat ulang data profil
             },
             error: (err) => {
               console.error('Gagal upload dokumen:', err);
@@ -115,6 +129,7 @@ export class VendorProfileComponent implements OnInit {
             }
           });
         } else {
+          // Jika tidak ada file dokumen, cukup simpan profil
           alert('Profil berhasil disimpan!');
           this.editMode = false;
           this.loadProfile();

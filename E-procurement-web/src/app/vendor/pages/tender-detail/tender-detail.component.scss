@@ -2,23 +2,98 @@
   display: flex;
   min-height: 100vh;
   overflow-x: hidden;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
+  background-color: #f9f9f9; /* Background yang lebih terang */
+  padding-top: 20px;
 }
 
 .main-content {
   flex-grow: 1;
-  margin-left: 250px; // biar isi konten geser dari sidebar
-  padding: 1rem;
+  margin-left: 250px; /* Geser konten dari sidebar */
+  padding: 1.5rem;
+}
 
-  @media (max-width: 768px) {
+.card {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Efek hover untuk card */
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.75rem; /* Ukuran lebih besar */
+  font-weight: 700; /* Tebal */
+  color: #333;
+  color: transparent;
+  letter-spacing: 1px; /* Sedikit jarak antar huruf */
+}
+
+.card-text {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+input[type="number"], input[type="file"] {
+  border-radius: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus, input[type="file"]:focus {
+  border-color: #007bff; /* Border saat fokus */
+}
+
+.btn {
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient-primary {
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border: none;
+  color: white;
+}
+
+.btn-gradient-primary:hover {
+  background: linear-gradient(90deg, #0056b3, #003366);
+  transform: translateY(-2px);
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.text-highlight {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .main-content {
     margin-left: 0;
   }
 }
 
-.card {
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}

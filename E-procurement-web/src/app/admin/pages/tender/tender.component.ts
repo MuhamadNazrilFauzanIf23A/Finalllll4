@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
-import { PenawaranService } from '../../../core/service/penawaran.service';
+import { AccPermintaanService } from '../../../core/service/AccPermintaan.service'; 
 
 @Component({
   selector: 'app-tender',
@@ -14,14 +14,15 @@ import { PenawaranService } from '../../../core/service/penawaran.service';
 export class TenderComponent implements OnInit {
   daftarTender: any[] = [];
 
-  constructor(private penawaranService: PenawaranService) {}
+  constructor(private accPermintaanService: AccPermintaanService) {}
 
   ngOnInit(): void {
     this.loadTender();
   }
 
+  // Mengambil data tender dari service
   loadTender() {
-    this.penawaranService.getAll().subscribe({
+    this.accPermintaanService.getAllPenawaran().subscribe({
       next: (res) => {
         this.daftarTender = res.data ?? res;
       },
@@ -31,37 +32,15 @@ export class TenderComponent implements OnInit {
     });
   }
 
-  simpanTender(item: any) {
-    this.penawaranService.updateHarga(item.id, item.penawaran).subscribe({
-      next: () => {
-        alert(`Harga penawaran untuk ${item.vendor} disimpan.`);
-      },
-      error: () => {
-        alert('Gagal menyimpan harga penawaran');
-      }
-    });
-  }
-
-  tandaiSelesai(item: any) {
-    if (!item.terverifikasi) {
-      alert('Dokumen belum diverifikasi.');
-      return;
-    }
-
-    this.penawaranService.tandaiSelesai(item.id).subscribe({
-      next: () => {
-        item.status = 'Selesai';
-        alert(`Tender ${item.vendor} ditandai selesai & PO diterbitkan.`);
-      },
-      error: () => alert('Gagal menandai selesai')
-    });
-  }
-
+  // Memverifikasi (atau verifikasi ulang) dokumen
   verifikasiDokumen(item: any) {
-    this.penawaranService.verifikasi(item.id).subscribe({
+    const updatedStatus = item.status;
+    const updatedHarga = item.harga_penawaran;
+
+    this.accPermintaanService.verifikasiDokumen(item.id, updatedStatus, updatedHarga).subscribe({
       next: () => {
-        item.terverifikasi = true;
-        alert(`Dokumen ${item.vendor} telah diverifikasi.`);
+        item.verifikasi = true;
+        alert(`Dokumen ${item.vendor} berhasil diverifikasi.`);
       },
       error: () => alert('Gagal memverifikasi dokumen')
     });

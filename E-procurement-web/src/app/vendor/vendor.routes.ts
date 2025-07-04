@@ -46,7 +46,7 @@ export const vendorRoutes: Routes = [
     path: 'submit-penawaran',
     loadComponent: () =>
       import('./pages/submit-penawaran/submit-penawaran.component').then(m => m.SubmitPenawaranComponent),
-    title: 'Pengajuan Penawaran'
+    title: 'Pengajuan Penawaran'       
   },
 
   // 📄 Detail Tender

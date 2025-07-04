@@ -3,80 +3,97 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Penawaran;
+use App\Models\Pengadaan;
+use Illuminate\Http\Request;
 use App\Models\PurchaseOrder;
-use Carbon\Carbon;
 
 class PenawaranController extends Controller
 {
-    // GET: /api/admin/penawaran
-    public function index()
-    {
-        $data = Penawaran::with(['vendor', 'pengadaan'])->get()->map(function ($p) {
-            return [
-                'id' => $p->id,
-                'vendor' => $p->vendor->nama ?? '-',
-                'namaProyek' => $p->pengadaan->nama_proyek ?? '-',
-                'penawaran' => $p->harga_penawaran,
-                'status' => $p->status,
-                'terverifikasi' => (bool) $p->verifikasi,
-                'dokumenUrl' => $p->file_url,
-            ];
-        });
 
-        return response()->json(['data' => $data]);
+    // Mengambil semua penawaran
+    public function getAllPenawaran()
+    {
+        $penawaran = Penawaran::with(['pengadaan', 'vendor']) // join
+            ->get()
+            ->map(function ($penawaran) {
+                // tambah nama proyek dan vendor
+                return [
+                    'id' => $penawaran->id,
+                    'harga_penawaran' => $penawaran->harga_penawaran,
+                    'status' => $penawaran->status,
+                    'verifikasi' => $penawaran->verifikasi,
+                    'file_url' => $penawaran->file_url,
+                    'nama_proyek' => $penawaran->pengadaan->nama_proyek,
+                    'vendor' => $penawaran->vendor->nama_perusahaan, 
+                ];
+            });
+
+        return response()->json($penawaran);
     }
 
-    // POST: /api/admin/penawaran/{id}/verifikasi
-    public function verifikasi($id)
+    // Menyimpan penawaran
+    public function submitPenawaran(Request $request)
     {
-        $penawaran = Penawaran::findOrFail($id);
-        $penawaran->verifikasi = true;
+        $validated = $request->validate([
+            'vendor_id' => 'required|exists:vendors,id', // Validasi vendor_id
+            'pengadaan_id' => 'required|exists:pengadaans,id', // Validasi pengadaan_id
+            'harga_penawaran' => 'required|numeric', // Harga penawaran yang valid
+            'file_url' => 'required|file|mimes:pdf,doc,docx|max:2048', // File dokumen penawaran
+        ]);
+
+        // Menyimpan file penawaran
+        $filePath = $request->file('file_url')->store('penawaran', 'public');
+
+        // Menyimpan data penawaran ke dalam database
+        $penawaran = Penawaran::create([
+            'vendor_id' => $validated['vendor_id'],
+            'pengadaan_id' => $validated['pengadaan_id'],
+            'file_url' => $filePath,
+            'harga_penawaran' => $validated['harga_penawaran'],
+            'status' => 'Evaluasi',  // Status awal adalah Evaluasi
+            'verifikasi' => 0, // Status verifikasi adalah 0 (belum diverifikasi)
+        ]);
+
+        // Mengembalikan response
+        return response()->json(['message' => 'Penawaran berhasil diajukan', 'penawaran' => $penawaran], 201);
+    }
+
+
+    // Verifikasi dokumen penawaran
+    public function verifikasiDokumen($id, Request $request)
+    {
+        $penawaran = Penawaran::with('pengadaan')->findOrFail($id);
+
+        $penawaran->verifikasi = 1;
+        $penawaran->status = $request->status ?? $penawaran->status;
+        $penawaran->harga_penawaran = $request->harga_penawaran ?? $penawaran->harga_penawaran;
         $penawaran->save();
 
-        return response()->json(['message' => 'Dokumen berhasil diverifikasi']);
+        // Buat Purchase Order jika statusnya Lolos & belum ada PO
+        if ($penawaran->status === 'Lolos' && !$penawaran->purchaseOrder) {
+            PurchaseOrder::create([
+                'penawaran_id' => $penawaran->id,
+                'nilai' => $penawaran->harga_penawaran,
+                'tanggal' => now(),
+                'status' => 'Diterbitkan'
+            ]);
+        }
+
+        return response()->json(['message' => 'Verifikasi Berhasil']);
     }
 
-    // POST: /api/admin/penawaran/{id}/update
-    public function update(Request $request, $id)
+    // Update harga penawaran
+    public function updateHarga($id, Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'harga_penawaran' => 'required|numeric',
-            'status' => 'required|in:Evaluasi,Lolos,Gugur,Selesai'
         ]);
 
         $penawaran = Penawaran::findOrFail($id);
-        $penawaran->harga_penawaran = $request->harga_penawaran;
-        $penawaran->status = $request->status;
+        $penawaran->harga_penawaran = $validated['harga_penawaran'];
         $penawaran->save();
 
-        return response()->json(['message' => 'Penawaran berhasil diperbarui']);
+        return response()->json(['message' => 'Harga penawaran berhasil diperbarui']);
     }
-
-    // tanda selesai
-    public function tandaiSelesai($id)
-{
-    $penawaran = Penawaran::with('vendor', 'pengadaan')->findOrFail($id);
-
-    if (!$penawaran->verifikasi) {
-        return response()->json(['message' => 'Dokumen belum diverifikasi'], 400);
-    }
-
-    $penawaran->update(['status' => 'Lolos']);
-
-    // Cek apakah PO sudah pernah dibuat
-    $existingPO = PurchaseOrder::where('penawaran_id', $penawaran->id)->first();
-    if (!$existingPO) {
-        PurchaseOrder::create([
-            'penawaran_id' => $penawaran->id,
-            'nilai' => $penawaran->harga_penawaran,
-            'tanggal' => Carbon::now(),
-            'status' => 'Diterbitkan',
-            'file_url' => null // Bisa diisi jika kamu generate PDF
-        ]);
-    }
-
-    return response()->json(['message' => 'Penawaran ditandai sebagai pemenang dan PO diterbitkan']);
-}
 }

@@ -10,7 +10,7 @@
 
 .main-content {
   flex-grow: 1;
-  margin-left: 250px; // agar isi tidak tertutup sidebar
+  margin-left: 250px;
   padding: 1rem;
 
   @media (max-width: 768px) {
@@ -21,4 +21,24 @@
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+}
+
+.upload-card {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.upload-card h5 {
+  margin-bottom: 1rem;
+}
+
+.upload-card .btn-success {
+  margin-top: 0.5rem;
+}
+
+input[type="file"] {
+  cursor: pointer;
 }

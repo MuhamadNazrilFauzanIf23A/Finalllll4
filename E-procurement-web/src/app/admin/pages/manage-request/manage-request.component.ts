@@ -21,24 +21,31 @@ export class ManageRequestsComponent implements OnInit {
 
   constructor(private permintaanService: PermintaanService) {}
 
-  ngOnInit(): void {
-    this.loading = true;
+ngOnInit(): void {
+  this.loading = true;
 
-    this.permintaanService.getAll().subscribe({
-      next: (res) => {
-        this.daftarPermintaan = res.map((permintaan: any) => ({
-          ...permintaan,
-          spesifikasi: permintaan.spesifikasi || '-',    // Default if null/undefined
-          kuantitas: permintaan.kuantitas ?? 0,          // Accept 0 but fallback to 0 if null
-          alasan: permintaan.alasan || 'N/A',            // Default if null
-          file_pdf: permintaan.file_pdf || null          // Optional, for PDF preview
-        }));
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Gagal ambil data permintaan:', err);
-        this.loading = false;
-      }
-    });
-  }
+  this.permintaanService.getAll().subscribe({
+    next: (res) => {
+      this.daftarPermintaan = res.map((permintaan: any) => ({
+        ...permintaan,
+        spesifikasi: permintaan.spesifikasi || '-',    // Default if null/undefined
+        kuantitas: permintaan.kuantitas ?? 0,          // Accept 0 but fallback to 0 if null
+        alasan: permintaan.alasan || 'N/A',            // Default if null
+        file_pdf: permintaan.file_pdf || null          // Optional, for PDF preview
+      }));
+
+      // Urutkan berdasarkan tanggal_disetujui, yang terbaru di atas
+      this.daftarPermintaan.sort((a, b) => {
+        return new Date(b.tanggal_disetujui).getTime() - new Date(a.tanggal_disetujui).getTime();
+      });
+
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('Gagal ambil data permintaan:', err);
+      this.loading = false;
+    }
+  });
+}
+
 }

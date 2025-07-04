@@ -9,19 +9,27 @@
     <div class="profile-container">
       <div class="profile-card">
         <ion-avatar class="profile-avatar">
-          <img *ngIf="user?.nama" [src]="'https://ui-avatars.com/api/?name=' + user.nama + '&background=0D6EFD&color=fff'" alt="Avatar" />
+          <img *ngIf="user?.role" [src]="getProfileImage()" alt="Avatar" />
         </ion-avatar>
 
         <h2 class="profile-name">{{ user?.nama }}</h2>
         <p class="profile-role">{{ user?.divisi }}</p>
+        <p class="profile-role-badge">Role: {{ user?.role | titlecase }}</p>
 
         <ion-item lines="none" class="profile-info">
           <ion-icon slot="start" name="mail-outline"></ion-icon>
           <ion-label>{{ user?.email }}</ion-label>
         </ion-item>
+
+        <!-- Tombol Logout -->
       </div>
     </div>
+    <ion-button expand="block" color="danger" class="logout-button" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Logout
+    </ion-button>
   </ion-content>
 
+  <!-- Sidebar untuk Pengaju -->
   <app-sidebar></app-sidebar>
 </ion-page>

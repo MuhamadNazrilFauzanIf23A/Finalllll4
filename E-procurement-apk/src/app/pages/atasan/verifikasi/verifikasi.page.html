@@ -27,11 +27,14 @@
           </ion-chip>
 
           <div class="button-group mt-3" *ngIf="pengajuan.status === 'Menunggu'">
-            <ion-button expand="block" color="success" (click)="setujui(pengajuan)">
+            <!-- Tombol Setujui -->
+            <ion-button expand="block" color="success" (click)="setujui(pengajuan.id)">
               <ion-icon name="checkmark-circle" slot="start"></ion-icon>
               Setujui
             </ion-button>
-            <ion-button expand="block" color="danger" (click)="tolak(pengajuan)">
+
+            <!-- Tombol Tolak -->
+            <ion-button expand="block" color="danger" (click)="tolak(pengajuan.id)">
               <ion-icon name="close-circle" slot="start"></ion-icon>
               Tolak
             </ion-button>

@@ -18,28 +18,36 @@ export class VendorLoginComponent {
 
   constructor(private router: Router, private authService: VendorAuthService) {}
 
+  // Fungsi untuk login ketika form disubmit
   onLogin() {
     const payload = {
       email: this.email,
       password: this.password
     };
 
+    // Memanggil method login dari VendorAuthService
     this.authService.login(payload).subscribe({
       next: (res) => {
-        localStorage.setItem('vendorToken', res.token);
+        // Menyimpan token di localStorage setelah login berhasil
+        this.authService.saveVendorData(res.token, res.vendor.id); // Simpan token dan ID
+
+        // Arahkan ke halaman dashboard/vendor
         this.router.navigate(['/vendor/dashboard']);
       },
       error: (err) => {
+        // Menampilkan error jika login gagal
         this.errorMessage = 'Login gagal: email atau password salah';
-        console.error(err);
+        console.error('Error login:', err);
       }
     });
   }
 
+  // Fungsi untuk menuju halaman registrasi
   goToRegister() {
     this.router.navigate(['/vendor/registrasi']);
   }
 
+  // Fungsi untuk menuju halaman forgot password
   goToForgotPassword() {
     this.router.navigate(['/vendor/forgot-password']);
   }

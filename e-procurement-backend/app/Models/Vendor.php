@@ -60,4 +60,10 @@ class Vendor extends Authenticatable
     {
         return $this->hasMany(\App\Models\Penawaran::class);
     }
+    
+        // Relasi ke Aanwijzing
+    public function aanwijzings()
+    {
+        return $this->hasMany(Aanwijzing::class);
+    }
 }

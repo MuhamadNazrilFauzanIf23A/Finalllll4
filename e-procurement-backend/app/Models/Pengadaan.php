@@ -15,5 +15,11 @@ class Pengadaan extends Model
     {
         return $this->hasOne(Tender::class);
     }
+
+        public function permintaan()
+    {
+        return $this->belongsTo(Permintaan::class, 'permintaan_id');
+    }
 }
 
+    

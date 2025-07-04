@@ -1,33 +1,52 @@
 <div class="layout">
-  <!-- Sidebar -->
   <app-navbar-vendor></app-navbar-vendor>
 
   <!-- Konten Utama -->
   <div class="main-content p-4">
-    <h3 class="mb-3">Detail Tender</h3>
+    <h3 class="mb-4">Ajukan Penawaran</h3>
 
-    <div class="card shadow-sm">
+    <!-- Tender Detail Card -->
+    <div class="card shadow-lg hover-shadow">
       <div class="card-body">
-        <h5 class="card-title">{{ tenderDetail.nama }}</h5>
-        <p class="card-text">{{ tenderDetail.deskripsi }}</p>
-        <span class="badge bg-info text-dark">{{ tenderDetail.kategori }}</span>
-        <p class="mt-2 mb-1 text-muted small">
-          Batas Pendaftaran: {{ tenderDetail.batas | date: 'longDate' }}
-        </p>
-        <p class="mb-0 text-muted small">Lokasi: {{ tenderDetail.lokasi }}</p>
-        <p class="mb-0 text-muted small">
-          Nilai Proyek: Rp {{ tenderDetail.nilaiProyek | number }}
-        </p>
-        <a class="btn btn-link p-0 mt-2" [href]="tenderDetail.dokumenRks" target="_blank">
-          Lihat Dokumen RKS
-        </a>
-      </div>
-    </div>
+        <h5 class="card-title text-highlight">{{ tenderDetail?.nama_proyek }}</h5>
+        <p class="card-text"><strong>Spesifikasi:</strong> {{ tenderDetail?.spesifikasi }}</p>
+        <p class="card-text"><strong>Kuantitas:</strong> {{ tenderDetail?.kuantitas }}</p>
+        <p class="card-text"><strong>Nominal:</strong> {{ tenderDetail?.nominal | currency:'IDR' }}</p>
 
-    <div class="mt-4">
-      <a class="btn btn-primary" [routerLink]="['/vendor/submit-penawaran']">
-        Ajukan Penawaran
-      </a>
+        <!-- Form Pengajuan Penawaran -->
+        <form (ngSubmit)="submitPenawaran()">
+          <div class="mb-3">
+            <label for="hargaPenawaran" class="form-label">Harga Penawaran</label>
+            <input
+              type="number"
+              class="form-control form-control-lg"
+              id="hargaPenawaran"
+              [(ngModel)]="penawaran.hargaPenawaran"
+              name="hargaPenawaran"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="filePenawaran" class="form-label">Dokumen Penawaran</label>
+            <input
+              type="file"
+              class="form-control form-control-lg"
+              id="filePenawaran"
+              (change)="onFileChange($event)"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-gradient-primary btn-lg"
+            [disabled]="!penawaran.hargaPenawaran || !penawaran.filePenawaran"
+          >
+            Kirim Penawaran
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

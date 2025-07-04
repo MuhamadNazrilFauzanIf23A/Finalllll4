@@ -1,6 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'app-navbar-vendor',
@@ -10,12 +10,17 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./navbar-vendor.component.scss']
 })
 export class NavbarVendorComponent {
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private router: Router) {}
 
   toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
     if (sidebar) {
       sidebar.classList.toggle('sidebar-show');
     }
+  }
+
+  logout() {
+    localStorage.removeItem('vendorToken'); // Hapus token
+    this.router.navigate(['/vendor/login']); // Redirect ke halaman login
   }
 }

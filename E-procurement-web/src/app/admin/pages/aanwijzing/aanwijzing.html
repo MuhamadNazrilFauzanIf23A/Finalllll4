@@ -10,19 +10,20 @@
     <form class="row g-3 mb-4" (ngSubmit)="jadwalkanAanwijzing()">
       <div class="col-md-6">
         <label class="form-label">Pilih Proyek</label>
-    <select class="form-select" [(ngModel)]="form.pengadaan_id" name="pengadaan_id" required>
-      <option *ngFor="let proyek of daftarPengadaan" [value]="proyek.id">
-        {{ proyek.nama_proyek }} - {{ proyek.divisi }}
-      </option>
-    </select>
+        <select class="form-select" [(ngModel)]="form.pengadaan_id" name="pengadaan_id" required>
+          <option *ngFor="let proyek of daftarPengadaan" [value]="proyek.id">
+            {{ proyek.nama_proyek }} - {{ proyek.divisi }}
+          </option>
+        </select>
       </div>
       <div class="col-md-6">
         <label class="form-label">Tanggal Aanwijzing</label>
         <input type="datetime-local" class="form-control" [(ngModel)]="form.tanggal" name="tanggal" required />
       </div>
       <div class="col-12">
-        <button type="submit" class="btn btn-primary w-100 w-md-auto"
-                [disabled]="!form.pengadaan_id || !form.tanggal">Jadwalkan</button>
+        <button type="submit" class="btn btn-primary w-100 w-md-auto" [disabled]="!form.pengadaan_id || !form.tanggal">
+          Jadwalkan
+        </button>
       </div>
     </form>
 
@@ -41,7 +42,7 @@
         <tbody>
           <tr *ngFor="let a of aanwijzingList">
             <td>{{ a.namaProyek }}</td>
-            <td>{{ a.vendorCount }} Vendor</td>
+            <td>{{ a.vendorCount }} Vendor</td> <!-- Menampilkan jumlah vendor -->
             <td>{{ a.tanggalAanwijzing | date: 'medium' }}</td>
             <td>
               <span class="badge"
@@ -55,8 +56,7 @@
             </td>
             <td>
               <!-- Jika dokumen sudah tersedia -->
-              <a *ngIf="a.dokumenUrl" [href]="a.dokumenUrl" target="_blank"
-                 class="btn btn-outline-primary btn-sm">Lihat</a>
+              <a *ngIf="a.dokumenUrl" [href]="a.dokumenUrl" target="_blank" class="btn btn-outline-primary btn-sm">Lihat</a>
 
               <!-- Jika dokumen belum tersedia, tampilkan input dan tombol upload -->
               <div *ngIf="!a.dokumenUrl" class="d-flex flex-column gap-2">

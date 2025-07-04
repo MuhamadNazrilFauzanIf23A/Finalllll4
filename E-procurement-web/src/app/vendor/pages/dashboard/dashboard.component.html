@@ -1,24 +1,34 @@
-<div class="layout">
-  <!-- Sidebar Vendor -->
-  <app-navbar-vendor></app-navbar-vendor>
+<!-- Sidebar Vendor -->
+<app-navbar-vendor></app-navbar-vendor>
 
-  <!-- Konten Utama -->
-  <div class="main-content p-4">
-    <h3 class="mb-4">Tender Terbuka</h3>
+<!-- Konten Utama -->
+<div class="main-content p-4">
+  <h3 class="mb-4">Tender Terbuka</h3>
 
-    <div class="row g-4">
-      <div class="col-md-4" *ngFor="let tender of tenderList">
-        <div class="card h-100 shadow-sm">
-          <img [src]="tender.gambar" class="card-img-top" alt="Tender Image" />
-          <div class="card-body">
-            <h5 class="card-title">{{ tender.nama }}</h5>
-            <p class="card-text">{{ tender.deskripsi }}</p>
-            <span class="badge bg-info text-dark">{{ tender.kategori }}</span>
-            <p class="mt-2 mb-1 text-muted small">
-              Batas Pendaftaran: {{ tender.batas | date: 'longDate' }}
-            </p>
-            <a class="btn btn-primary btn-sm" [routerLink]="['/vendor/tender-detail', tender.id]">Lihat Detail</a>
-          </div>
+  <div class="row g-4">
+    <div class="col-md-4" *ngFor="let tender of tenderList">
+      <div class="card h-100 shadow-lg rounded-3">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">{{ tender.nama_proyek }}</h5>
+          <p class="card-text text-muted"><strong>Spesifikasi:</strong> {{ tender.spesifikasi }}</p>
+          <p class="card-text text-muted"><strong>Kuantitas:</strong> {{ tender.kuantitas }}</p>
+          <p class="card-text text-muted"><strong>Nominal:</strong> {{ tender.nominal | currency }}</p>
+
+          <!-- Button untuk menavigasi ke halaman tender-detail dengan query params -->
+          <a 
+            class="btn btn-primary btn-sm" 
+            [routerLink]="['/vendor/tender-detail', tender.id]"
+            [queryParams]="{
+              tenderId: tender.id, 
+              namaProyek: tender.nama_proyek, 
+              spesifikasi: tender.spesifikasi, 
+              kuantitas: tender.kuantitas, 
+              nominal: tender.nominal
+            }"
+            [attr.disabled]="tender.hasPenawaran ? true : null" 
+            [ngClass]="{'disabled-btn': tender.hasPenawaran}">
+            Ajukan Penawaran
+          </a>
         </div>
       </div>
     </div>

@@ -17,49 +17,37 @@
             <th>Harga Penawaran</th>
             <th>Status Evaluasi</th>
             <th>Verifikasi</th>
-            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of daftarTender">
-            <td>{{ item.namaProyek }}</td>
+            <td>{{ item.nama_proyek }}</td>
             <td>{{ item.vendor }}</td>
             <td>
-              <a *ngIf="item.dokumenUrl" [href]="item.dokumenUrl" target="_blank" class="btn btn-sm btn-outline-primary">Lihat</a>
-              <span *ngIf="!item.dokumenUrl" class="text-muted">Belum ada</span>
+              <a *ngIf="item.file_url" [href]="item.file_url" target="_blank" class="btn btn-sm btn-outline-primary">Lihat</a>
+              <span *ngIf="!item.file_url" class="text-muted">Belum ada</span>
             </td>
             <td>
               <input type="number" class="form-control form-control-sm"
-                     [(ngModel)]="item.penawaran"
+                     [(ngModel)]="item.harga_penawaran"
                      [disabled]="item.status === 'Selesai'" />
             </td>
             <td>
               <select class="form-select form-select-sm"
                       [(ngModel)]="item.status"
                       [disabled]="item.status === 'Selesai'">
+                <option value="Bidding Terbuka">Bidding Terbuka</option>
                 <option value="Evaluasi">Evaluasi</option>
                 <option value="Lolos">Lolos</option>
                 <option value="Gugur">Gugur</option>
+                <option value="Selesai">Selesai</option>
               </select>
               <span *ngIf="item.status === 'Lolos'" class="badge bg-success ms-2">Pemenang</span>
             </td>
             <td>
               <button class="btn btn-outline-success btn-sm"
-                      (click)="verifikasiDokumen(item)"
-                      [disabled]="item.terverifikasi">
-                {{ item.terverifikasi ? 'Terverifikasi' : 'Verifikasi' }}
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary"
-                      (click)="simpanTender(item)"
-                      [disabled]="item.status === 'Selesai'">
-                Simpan
-              </button>
-              <button class="btn btn-sm btn-outline-success ms-2"
-                      (click)="tandaiSelesai(item)"
-                      [disabled]="item.status === 'Selesai' || !item.terverifikasi">
-                Tandai Selesai
+                      (click)="verifikasiDokumen(item)">
+                {{ item.verifikasi ? 'Verifikasi Ulang' : 'Verifikasi' }}
               </button>
             </td>
           </tr>

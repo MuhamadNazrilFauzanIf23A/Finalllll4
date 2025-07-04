@@ -1,5 +1,5 @@
 <div class="layout">
-  <!-- Sidebar -->
+  <!-- Sidebar Navbar Vendor -->
   <app-navbar-vendor></app-navbar-vendor>
 
   <!-- Konten Utama -->
@@ -14,18 +14,16 @@
             <th>Harga Penawaran Anda</th>
             <th>Status Bidding</th>
             <th>Nilai Evaluasi</th>
-            <th>Catatan Evaluator</th>
-            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of daftarBidding">
-            <td>{{ item.namaProyek }}</td>
+            <td>{{ item.nama_proyek }}</td>
             <td>
               <input
                 type="number"
                 class="form-control form-control-sm"
-                [(ngModel)]="item.penawaran"
+                [(ngModel)]="item.harga_penawaran"
                 [disabled]="item.status !== 'Bidding Terbuka'" />
             </td>
             <td>
@@ -33,13 +31,13 @@
                 [ngClass]="{
                   'bg-warning text-dark': item.status === 'Bidding Terbuka',
                   'bg-info': item.status === 'Evaluasi',
-                  'bg-success': item.status === 'Selesai'
+                  'bg-success': item.status === 'Lolos',
+                  'bg-danger': item.status === 'Gugur',
+                  'bg-secondary': item.status === 'Selesai'
                 }">
                 {{ item.status }}
               </span>
             </td>
-            <td>{{ item.nilaiEvaluasi || '-' }}</td>
-            <td>{{ item.catatan || '-' }}</td>
             <td>
               <button class="btn btn-sm btn-outline-primary" 
                       (click)="submitBidding(item)" 

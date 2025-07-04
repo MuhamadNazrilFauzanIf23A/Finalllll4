@@ -14,28 +14,33 @@ class VendorProfileController extends Controller
     /**
      * ✅ Ambil data profil vendor yang sedang login
      */
-    public function show(Request $request)
-    {
-        $vendor = Auth::guard('vendor')->user();
+public function show(Request $request)
+{
+    // Log untuk melihat token yang diterima
+    \Log::info('Authorization Token:', [$request->header('Authorization')]);
 
-        if (!$vendor) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
+    // Verifikasi token menggunakan auth:vendor
+    $vendor = $request->user();
 
-        // Hindari kirim semua field sensitif, batasi data yang dikembalikan
-        return response()->json([
-            'id' => $vendor->id,
-            'nama_perusahaan' => $vendor->nama_perusahaan,
-            'kategori' => $vendor->kategori,
-            'email' => $vendor->email,
-            'telepon' => $vendor->telepon,
-            'alamat' => $vendor->alamat,
-            'penanggung_jawab' => $vendor->penanggung_jawab,
-            'tahun_berdiri' => $vendor->tahun_berdiri,
-            'website' => $vendor->website,
-            'dokumen_legalitas' => $vendor->dokumen_legalitas,
-        ]);
+    if (!$vendor) {
+        return response()->json(['message' => 'Unauthenticated'], 401);
     }
+
+    // Hindari kirim semua field sensitif, batasi data yang dikembalikan
+    return response()->json([
+        'id' => $vendor->id,
+        'nama_perusahaan' => $vendor->nama_perusahaan,
+        'kategori' => $vendor->kategori,
+        'email' => $vendor->email,
+        'telepon' => $vendor->telepon,
+        'alamat' => $vendor->alamat,
+        'penanggung_jawab' => $vendor->penanggung_jawab,
+        'tahun_berdiri' => $vendor->tahun_berdiri,
+        'website' => $vendor->website,
+        'dokumen_legalitas' => $vendor->dokumen_legalitas,
+    ]);
+}
+
 
     /**
      * ✅ Update data profil vendor

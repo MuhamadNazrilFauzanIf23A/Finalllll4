@@ -21,4 +21,16 @@ export class PurchaseOrderService {
   getAll(): Observable<any> {
     return this.http.get(this.BASE_URL, this.getAuthHeaders());
   }
+
+uploadPO(id: number, file: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('file_po', file);
+
+  return this.http.post(`${this.BASE_URL}/${id}/upload`, formData, this.getAuthHeaders());
+}
+
+tandaiSelesai(id: number): Observable<any> {
+  return this.http.post(`${this.BASE_URL}/${id}/selesai`, {}, this.getAuthHeaders());
+}
+
 }

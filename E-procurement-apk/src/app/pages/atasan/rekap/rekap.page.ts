@@ -20,22 +20,24 @@ export class RekapPage implements OnInit {
     this.loadRekapData(); // Ambil data ketika halaman pertama kali dibuka
   }
 
-  loadRekapData() {
-    this.permintaanService.getUserPermintaan().subscribe({
-      next: (res) => {
-        console.log('Data rekap diterima:', res);
-        this.daftarRekap = res.map((item: any) => ({
-          nama_proyek: item.nama_proyek,
-          tanggal: item.tanggal_disetujui || item.created_at,
-          divisi: item.divisi,
-          status: item.status,
-        }));
-      },
-      error: (err) => {
-        console.error('❌ Gagal mengambil data rekap:', err);
-      }
-    });
-  }
+loadRekapData() {
+  this.permintaanService.getUserPermintaan().subscribe({
+    next: (res) => {
+      console.log('Data rekap diterima:', res); 
+      // Menampilkan data yang diterima
+      this.daftarRekap = res.map((item: any) => ({
+        nama_proyek: item.nama_proyek,
+        tanggal: item.tanggal_disetujui || item.created_at,
+        divisi: item.divisi,
+        status: item.status,
+      }));
+    },
+    error: (err) => {
+      console.error('❌ Gagal mengambil data rekap:', err);
+    }
+  });
+}
+
 
   getStatusColor(status: string): string {
     switch (status.toLowerCase()) {

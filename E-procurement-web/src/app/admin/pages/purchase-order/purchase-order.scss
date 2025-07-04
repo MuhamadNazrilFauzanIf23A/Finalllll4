@@ -10,7 +10,7 @@
 
 .main-content {
   flex-grow: 1;
-  margin-left: 250px; // untuk menghindari tabrakan sidebar
+  margin-left: 250px;
   padding: 1rem;
 
   @media (max-width: 768px) {
@@ -18,10 +18,6 @@
   }
 }
 
-.table-responsive {
-  overflow-x: auto;
-
-  table {
-    min-width: 900px; // biar bisa scroll horizontal di layar kecil
-  }
+.table td, .table th {
+  vertical-align: middle;
 }

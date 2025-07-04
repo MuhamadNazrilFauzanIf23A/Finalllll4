@@ -58,4 +58,16 @@ export class AuthService {
   }): Observable<any> {
     return this.http.post(`${this.BASE_URL}/reset-password`, data);
   }
+
+  /**
+   * Ambil data user yang sedang login
+   */
+  getUserData(): Observable<any> {
+    const token = localStorage.getItem('apk_token');
+    return this.http.get<any>(`${this.BASE_URL}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

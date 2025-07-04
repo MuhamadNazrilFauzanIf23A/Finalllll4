@@ -1,8 +1,6 @@
 <div class="layout">
-  <!-- Sidebar -->
   <app-navbar-vendor></app-navbar-vendor>
 
-  <!-- Konten Utama -->
   <div class="main-content p-4">
     <h3 class="mb-4">Hasil Tender</h3>
 
@@ -14,6 +12,7 @@
             <th>Status</th>
             <th>Nilai Kontrak</th>
             <th>Purchase Order</th>
+            <th>Bukti Pembayaran</th>
           </tr>
         </thead>
         <tbody>
@@ -31,18 +30,51 @@
             <td>
               {{
                 item.status === 'Menang' && item.nilaiKontrak
-                  ? ('Rp ' + item.nilaiKontrak.toLocaleString())
+                  ? ('Rp ' + (item.nilaiKontrak || 0).toLocaleString())
                   : '-'
               }}
             </td>
+
             <td>
-              <a *ngIf="item.status === 'Menang'"
-                 class="btn btn-sm btn-outline-primary"
-                 [routerLink]="['/vendor/hasil-tender', item.id]">
-                Lihat PO
-              </a>
-              <span *ngIf="item.status !== 'Menang'" class="text-muted">-</span>
+              <div *ngIf="item.status === 'Menang'; else dashPO">
+                <a class="btn btn-sm btn-outline-primary"
+                  (click)="downloadPO(item.penawaran_id)">
+                  Lihat PO (PDF)
+                </a>
+              </div>
+              <ng-template #dashPO><span class="text-muted">-</span></ng-template>
             </td>
+
+<td>
+  <div *ngIf="item.status === 'Menang'; else dashBayar">
+
+    <!-- Kalau sudah ada bukti pembayaran -->
+    <ng-container *ngIf="item.bukti_pembayaran; else uploadForm">
+      <a [href]="item.bukti_pembayaran" target="_blank"
+         class="btn btn-sm btn-outline-success mb-1">
+        Lihat Bukti
+      </a>
+      <div class="text-success small">✅ Sudah di-upload</div>
+    </ng-container>
+
+    <!-- Kalau belum ada, tampilkan input & tombol upload -->
+    <ng-template #uploadForm>
+      <form class="d-inline" enctype="multipart/form-data">
+        <input type="file"
+               (change)="onFileSelected($event, item.penawaran_id)"
+               accept=".pdf,.jpg,.jpeg,.png" />
+        <button type="button"
+                class="btn btn-sm btn-outline-info mt-1"
+                (click)="uploadPembayaran(item.penawaran_id)">
+          Upload Bukti Pembayaran
+        </button>
+      </form>
+    </ng-template>
+
+  </div>
+  <ng-template #dashBayar><span class="text-muted">-</span></ng-template>
+</td>
+
           </tr>
         </tbody>
       </table>
